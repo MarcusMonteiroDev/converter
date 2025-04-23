@@ -67,24 +67,89 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.compose.foundation.clickable
 
+//--------------------------------------------------------------------------------------------------
+// Lista das telas do aplicativo
+// A tela Home é a tela inicial do aplicativo e as demais são as telas das unidades de conversão
 enum class Screen {
-    Home,
-    Temperature
+    Home,               // Tela inicial
+    Area,
+    Comprimento,
+    Dados,
+    Massa,
+    Pressao,
+    Temperatura,
+    Tempo,
+    Velocidade,
+    Volume
 }
+//--------------------------------------------------------------------------------------------------
+// Componentes de UI utilizados no aplicativo:
+// Menu expandido (DropDownMenu)
+@Composable
+fun ModeloMenu (isDropDownExpanded: MutableState<Boolean>,
+                itemPosition: MutableState<Int>,
+                opcoes: List<String>) {
+    Row (
+        modifier = Modifier.clickable {
+            // Ao clicar, inverte o estado do DropdownMenu (abre ou fecha)
+            isDropDownExpanded.value = true
+        }
+    ) {
+        // Exibe o texto da opção selecionada com base no índice armazenado em itemPosition
+        Text(text = opcoes[itemPosition.value])
 
+        // DropdownMenu para exibir a lista de opções
+        DropdownMenu(
+            expanded = isDropDownExpanded.value, // Controla a visibilidade do menu
+            onDismissRequest = {
+                // Fecha o menu quando o usuário clica fora dele
+                isDropDownExpanded.value = false
+            }) {
+            // Itera sobre a lista de opções e seus índices
+            opcoes.forEachIndexed { index, item ->
+                // Cria um DropdownMenuItem para cada opção
+                DropdownMenuItem(text = {
+                    // Exibe o texto da opção no item de menu
+                    Text(text = item)
+                },
+                    onClick = {
+                        // Ao clicar em um item de menu:
+                        // Fecha o DropdownMenu
+                        isDropDownExpanded.value = false
+                        // Atualiza o índice da opção selecionada
+                        itemPosition.value = index
+                    }
+                )
+            }
+        }
+    }
+}
+//--------------------------------------------------------------------------------------------------
+// Funções de conversão:
+// Conversão Área
+fun convertArea (inputUnidade: String,
+                 itemPosition: Int): String {
+    return inputUnidade
+}
+//--------------------------------------------------------------------------------------------------
+// Início do código principal:
+// Classe principal da activity
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             ConverterTheme {
+                // Inicializa o aplicativo
                 MainApp()
                 }
             }
         }
     }
 
+// Composable prinicipal do aplicativo
 @Composable
 fun MainApp (modifier: Modifier = Modifier) {
     // Cria o NavController que gerencia o estado da navegação
@@ -100,13 +165,61 @@ fun MainApp (modifier: Modifier = Modifier) {
             composable (route = Screen.Home.name) {
                 // Chama o composable da tela inicial
                 HomeScreen(
-                    onNavigateToTemperature = {navController.navigate(Screen.Temperature.name)}
+                    onNavigateToArea = {navController.navigate(Screen.Area.name)},
+                    onNavigateToTemperatura = {navController.navigate(Screen.Temperatura.name)},
+                    onNavigateToComprimento = {navController.navigate(Screen.Comprimento.name)},
+                    onNavigateToDados = {navController.navigate(Screen.Dados.name)},
+                    onNavigateToMassa = {navController.navigate(Screen.Massa.name)},
+                    onNavigateToPressao = {navController.navigate(Screen.Pressao.name)},
+                    onNavigateToTempo = {navController.navigate(Screen.Tempo.name)},
+                    onNavigateToVelocidade = {navController.navigate(Screen.Velocidade.name)},
+                    onNavigateToVolume = {navController.navigate(Screen.Volume.name)},
                 )
             }
-            // Mapeia a rota Temperature para o composable TemperatureScreen
-            composable (route = Screen.Temperature.name) {
+            // Mapeia a rota Area para o composable AreaScreen
+            composable (route = Screen.Area.name) {
+                // Chama o composable da tela de conversão de área
+                AreaScreen (onGoBack = {navController.navigateUp()})
+            }
+            // Mapeia a rota Comprimento para o composable ComprimentoScreen
+            composable (route = Screen.Comprimento.name) {
+                // Chama o composable da tela de conversão de comprimento
+                ComprimentoScreen (onGoBack = {navController.navigateUp()})
+            }
+            // Mapeia a rota Dados para o composable DadosScreen
+            composable (route = Screen.Dados.name) {
+                // Chama o composable da tela de conversão de dados
+                DadosScreen (onGoBack = {navController.navigateUp()})
+            }
+            // Mapeia a rota Massa para o composable MassaScreen
+            composable (route = Screen.Massa.name) {
+                // Chama o composable da tela de conversão de massa
+                MassaScreen (onGoBack = {navController.navigateUp()})
+            }
+            // Mapeia a rota Pressao para o composable PressaoScreen
+            composable (route = Screen.Pressao.name) {
+                // Chama o composable da tela de conversão de pressão
+                PressaoScreen (onGoBack = {navController.navigateUp()})
+            }
+            // Mapeia a rota Temperatura para o composable TemperaturaScreen
+            composable (route = Screen.Temperatura.name) {
                 // Chama o composable da tela de conversão de temperatura
-                TemperatureScreen (onGoBack = {navController.navigateUp()})
+                TemperaturaScreen (onGoBack = {navController.navigateUp()})
+            }
+            // Mapeia a rota Tempo para o composable TempoScreen
+            composable (route = Screen.Tempo.name) {
+                // Chama o composable da tela de conversão de tempo
+                TempoScreen (onGoBack = {navController.navigateUp()})
+            }
+            // Mapeia a rota Velocidade para o composable VelocidadeScreen
+            composable (route = Screen.Velocidade.name) {
+                // Chama o composable da tela de conversão de velocidade
+                VelocidadeScreen (onGoBack = {navController.navigateUp()})
+            }
+            // Mapeia a rota Volume para o composable VolumeScreen
+            composable (route = Screen.Volume.name) {
+                // Chama o composable da tela de conversão de volume
+                VolumeScreen (onGoBack = {navController.navigateUp()})
             }
         }
     }
@@ -115,26 +228,169 @@ fun MainApp (modifier: Modifier = Modifier) {
 // Composable que desenha a tela inicial do aplicativo
 @Composable
 fun HomeScreen(
-    onNavigateToTemperature: () -> Unit,    // Função a ser executada ao clicar no botão
-    modifier: Modifier = Modifier           // Modificador para personalizar a exibição
+    // Parâmetros chamados pelo MainApp para acesso às telas de conversão
+    onNavigateToArea: () -> Unit,
+    onNavigateToComprimento: () -> Unit,
+    onNavigateToDados: () -> Unit,
+    onNavigateToMassa: () -> Unit,
+    onNavigateToPressao: () -> Unit,
+    onNavigateToTemperatura: () -> Unit,
+    onNavigateToTempo: () -> Unit,
+    onNavigateToVelocidade: () -> Unit,
+    onNavigateToVolume: () -> Unit,
 ) {
+    // Coluna principal de sustentação do aplicativo
     Column (modifier = Modifier
         .fillMaxSize()
-        .border(3.dp, Color.Red),){
+        .border(3.dp, Color.Red),) {
+        // Sucessão de linhas em que serão disponibilizados os botões que levam para as telas de conversão
+        // Primeira linha
+        Row () {
+            // Área
+            Button(onClick = {onNavigateToArea()}) {
+                Text(text = "Área")
+            }
+            // Comprimento
+            Button(onClick = {onNavigateToComprimento()}) {
+                Text(text = "Comprimento")
+            }
+            // Dados
+            Button(onClick = {onNavigateToDados()}) {
+                Text(text = "Dados ")
+            }
+        }
+        // Segunda linha
+        Row () {
+            // Massa
+            Button(onClick = {onNavigateToMassa()}) {
+                Text(text = "Massa")
+            }
+            // Pressão
+            Button(onClick = {onNavigateToPressao()}) {
+                Text(text = "Pressão")
+            }
+            // Temperatura
+            Button(onClick = {onNavigateToTemperatura()}) {
+                Text(text = "Temperatura")
+            }
+        }
+        // Terceira linha
+        Row () {
+            // Tempo
+            Button(onClick = {onNavigateToTempo()}) {
+                Text(text = "Tempo")
+            }
+            // Velocidade
+            Button(onClick = {onNavigateToVelocidade()}) {
+                Text(text = "Velocidade")
+            }
+            // Volume
+            Button(onClick = {onNavigateToVolume()}) {
+                Text(text = "Volume")
+            }
+        }
+    }
+}
 
+// Tela de conversão de área
+@Composable
+fun AreaScreen(modifier: Modifier = Modifier,
+               onGoBack: () -> Unit) {
+    // Unidades de medida de área disponíveis
+    val unidades = listOf("m2","km2",)
+    // Registra o input do usuário
+    var inputUnidade by remember { mutableStateOf("") }
+
+    var selectedOption_1 by remember { mutableStateOf(0) }
+    var selectedOption_2 by remember { mutableStateOf(1) }
+
+    // Coluna principal de sustentação da tela
+    Column (modifier = Modifier.fillMaxSize()) {
+        Text (text = "Converter de")
+
+        // Menu expandido (DropDownMenu) com as opções de unidades de medida
+        ModeloMenu (isDropDownExpanded = remember { mutableStateOf(false) },
+                    itemPosition = remember { mutableStateOf(0) },
+                    opcoes = unidades)
+
+        TextField (value = inputUnidade,
+            onValueChange = {inputUnidade = it},
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            label = { Text(text = "Valor")},
+            singleLine = true
+            )
+
+        Text (text = "Para:")
+        ModeloMenu (isDropDownExpanded = remember { mutableStateOf(false) },
+                    itemPosition = remember { mutableStateOf(1) },
+                    opcoes = unidades)
+        Text (text = "Resultado:")
+        Text (text = convertArea(inputUnidade = inputUnidade,
+            itemPosition = selectedOption))
     }
 }
 
 @Composable
-fun TemperatureScreen(modifier: Modifier = Modifier,
+fun ComprimentoScreen(modifier: Modifier = Modifier,
                       onGoBack: () -> Unit) {
-    Text (text = "Temperature Screen")
+    Text (text = "Comprimento Screen")
 }
 
+@Composable
+fun DadosScreen(modifier: Modifier = Modifier,
+                onGoBack: () -> Unit) {
+    Text (text = "Dados Screen")
+}
+
+@Composable
+fun MassaScreen(modifier: Modifier = Modifier,
+                onGoBack: () -> Unit) {
+    Text (text = "Massa Screen")
+}
+
+@Composable
+fun PressaoScreen(modifier: Modifier = Modifier,
+                  onGoBack: () -> Unit) {
+    Text (text = "Pressao Screen")
+}
+
+@Composable
+fun TemperaturaScreen(modifier: Modifier = Modifier,
+                      onGoBack: () -> Unit) {
+    Text (text = "Temperatura Screen")
+}
+
+@Composable
+fun TempoScreen(modifier: Modifier = Modifier,
+                onGoBack: () -> Unit) {
+    Text (text = "Tempo Screen")
+}
+
+@Composable
+fun VelocidadeScreen(modifier: Modifier = Modifier,
+                     onGoBack: () -> Unit) {
+    Text (text = "Velocidade Screen")
+}
+
+@Composable
+fun VolumeScreen(modifier: Modifier = Modifier,
+                 onGoBack: () -> Unit) {
+    Text (text = "Volume Screen")
+}
+
+/*
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     ConverterTheme {
         MainApp()
     }
+}
+ */
+
+@Preview (showBackground = true)
+@Composable
+fun AreaScreenPreview() {
+    AreaScreen(modifier = Modifier,
+        onGoBack = {})
 }

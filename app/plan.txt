@@ -1,1 +1,12 @@
 Planejamento de funcionalidades
+
+Unidades de medidas disponíveis na tela inicial:
+Área
+Comprimento
+Dados / Armazenamento Digital
+Massa
+Pressão
+Temperatura
+Tempo
+Velocidade
+Volume
