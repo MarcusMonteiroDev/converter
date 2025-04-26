@@ -129,9 +129,59 @@ fun ModeloMenu (isDropDownExpanded: MutableState<Boolean>,
 //--------------------------------------------------------------------------------------------------
 // Funções de conversão:
 // Conversão Área
-fun convertArea (inputUnidade: String,
-                 itemPosition: Int): String {
-    return inputUnidade
+fun convertArea (inputUnidade: String,      // Input do usuário
+                 itemPosition1: Int,        // Unidade de entrada (de)
+                 itemPosition2: Int         // Unidade de saída (para)
+): String {
+    /*
+    Lista de unidades disponíveis
+    [0] -> Quilômetro quadrado (km²)
+    [1] -> Hectare (ha)
+    [2] -> Are (a)
+    [3] -> Metro quadrado (m²)
+    [4] -> Decímetro quadrado (dm²)
+    [5] -> Centímetro quadrado (cm²)
+    [6] -> Milímetro quadrado (mm²)
+    [7] -> Micrômetro quadrado (µm²)
+    [8] -> Nanômetro quadrado (nm²)
+    */
+
+    // Resultado da conversão
+    var resultado: String = "0"
+    // Variável usada no cpalculo. Tenta converter o input do usuário para um número
+    // caso não consiga, retorna 0
+    var variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+
+    // Lista de unidades de medida em m²
+    val unidadesEmM2 = listOf(
+        1_000_000.0, // km²
+        10_000.0,    // ha
+        100.0,       // a
+        1.0,         // m²
+        0.01,        // dm²
+        0.0001,      // cm²
+        0.000001,    // mm²
+        1.0E-12,     // µm²
+        1.0E-18      // nm²
+    )
+
+    // Primeiro o input do usuário é convertido para m²
+    // Depois o resultado é convertido para a unidade de saída
+    // Essa abordagem evita o uso de condicionais para a conversão
+    val valorEmM2 = variavel * unidadesEmM2[itemPosition1]
+    resultado = (valorEmM2 / unidadesEmM2[itemPosition2]).toString()
+
+    // Retorna o resultado formatado
+    return resultado
+}
+//--------------------------------------------------------------------------------------------------
+// Funções ultilitárias
+// Corretor de string vazia: retorna "0" caso seja passado para ele uma string vazia
+fun corretorStringVazia (input: String): String {
+    if (input == "") {
+        return "0"
+    }
+    return input
 }
 //--------------------------------------------------------------------------------------------------
 // Início do código principal:
@@ -144,10 +194,10 @@ class MainActivity : ComponentActivity() {
             ConverterTheme {
                 // Inicializa o aplicativo
                 MainApp()
-                }
             }
         }
     }
+}
 
 // Composable prinicipal do aplicativo
 @Composable
@@ -297,12 +347,23 @@ fun HomeScreen(
 fun AreaScreen(modifier: Modifier = Modifier,
                onGoBack: () -> Unit) {
     // Unidades de medida de área disponíveis
-    val unidades = listOf("m2","km2",)
+    val unidades = listOf(
+        "Quilômetro quadrado (km²)",
+        "Hectare (ha)",
+        "Are (a)",
+        "Metro quadrado (m²)",
+        "Decímetro quadrado (dm²)",
+        "Centímetro quadrado (cm²)",
+        "Milímetro quadrado (mm²)",
+        "Micrômetro quadrado (µm²)",
+        "Nanômetro quadrado (nm²)"
+    )
+
     // Registra o input do usuário
     var inputUnidade by remember { mutableStateOf("") }
 
-    var selectedOption_1 by remember { mutableStateOf(0) }
-    var selectedOption_2 by remember { mutableStateOf(1) }
+    val itemPosition1 = remember { mutableStateOf(0) }
+    val itemPosition2 = remember { mutableStateOf(1) }
 
     // Coluna principal de sustentação da tela
     Column (modifier = Modifier.fillMaxSize()) {
@@ -310,23 +371,27 @@ fun AreaScreen(modifier: Modifier = Modifier,
 
         // Menu expandido (DropDownMenu) com as opções de unidades de medida
         ModeloMenu (isDropDownExpanded = remember { mutableStateOf(false) },
-                    itemPosition = remember { mutableStateOf(0) },
-                    opcoes = unidades)
+            itemPosition = itemPosition1,
+            opcoes = unidades)
 
         TextField (value = inputUnidade,
             onValueChange = {inputUnidade = it},
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             label = { Text(text = "Valor")},
             singleLine = true
-            )
+        )
 
         Text (text = "Para:")
+
         ModeloMenu (isDropDownExpanded = remember { mutableStateOf(false) },
-                    itemPosition = remember { mutableStateOf(1) },
-                    opcoes = unidades)
+            itemPosition = itemPosition2,
+            opcoes = unidades)
+
         Text (text = "Resultado:")
+
         Text (text = convertArea(inputUnidade = inputUnidade,
-            itemPosition = selectedOption))
+            itemPosition1 = itemPosition1.value,
+            itemPosition2 = itemPosition2.value))
     }
 }
 
