@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -68,6 +69,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.foundation.clickable
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.TopAppBar
 
 //--------------------------------------------------------------------------------------------------
 // Lista das telas do aplicativo
@@ -176,13 +182,7 @@ fun convertArea (inputUnidade: String,      // Input do usuário
 }
 //--------------------------------------------------------------------------------------------------
 // Funções ultilitárias
-// Corretor de string vazia: retorna "0" caso seja passado para ele uma string vazia
-fun corretorStringVazia (input: String): String {
-    if (input == "") {
-        return "0"
-    }
-    return input
-}
+
 //--------------------------------------------------------------------------------------------------
 // Início do código principal:
 // Classe principal da activity
@@ -292,7 +292,7 @@ fun HomeScreen(
     // Coluna principal de sustentação do aplicativo
     Column (modifier = Modifier
         .fillMaxSize()
-        .border(3.dp, Color.Red),) {
+        .border(3.dp, Color.Blue),) {
         // Sucessão de linhas em que serão disponibilizados os botões que levam para as telas de conversão
         // Primeira linha
         Row () {
@@ -343,6 +343,7 @@ fun HomeScreen(
 }
 
 // Tela de conversão de área
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AreaScreen(modifier: Modifier = Modifier,
                onGoBack: () -> Unit) {
@@ -361,40 +362,73 @@ fun AreaScreen(modifier: Modifier = Modifier,
 
     // Registra o input do usuário
     var inputUnidade by remember { mutableStateOf("") }
-
+    // Armazenam a posição do menu expandido para saber quais unidades estão sendo convertidas
     val itemPosition1 = remember { mutableStateOf(0) }
     val itemPosition2 = remember { mutableStateOf(1) }
 
     // Coluna principal de sustentação da tela
-    Column (modifier = Modifier.fillMaxSize()) {
-        Text (text = "Converter de")
+    Scaffold (
+        topBar = {
+            TopAppBar (title = { Text(text = "Converter área") },
+                navigationIcon = { IconButton(onClick = {onGoBack()}) {
+                    Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Voltar") }
+                }
+            )
+        }
+    ) {innerPadding ->
+        Column (modifier = Modifier.fillMaxSize().padding(innerPadding)
+            .padding(16.dp),
+            horizontalAlignment = Alignment.Start,) {
+            Text (text = "Converter de",
+                style = MaterialTheme.typography.titleMedium)
 
-        // Menu expandido (DropDownMenu) com as opções de unidades de medida
-        ModeloMenu (isDropDownExpanded = remember { mutableStateOf(false) },
-            itemPosition = itemPosition1,
-            opcoes = unidades)
+            Spacer (modifier = Modifier.height(8.dp))
 
-        TextField (value = inputUnidade,
-            onValueChange = {inputUnidade = it},
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            label = { Text(text = "Valor")},
-            singleLine = true
-        )
+            ModeloMenu (isDropDownExpanded = remember { mutableStateOf(false) },
+                itemPosition = itemPosition1,
+                opcoes = unidades)
 
-        Text (text = "Para:")
+            Spacer (modifier = Modifier.height(8.dp))
 
-        ModeloMenu (isDropDownExpanded = remember { mutableStateOf(false) },
-            itemPosition = itemPosition2,
-            opcoes = unidades)
+            TextField (modifier = Modifier.fillMaxWidth(),
+                colors = TextFieldDefaults.colors(
+                    focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+                    cursorColor = MaterialTheme.colorScheme.primary,
+                    focusedLabelColor = MaterialTheme.colorScheme.primary),
+                value = inputUnidade,
+                onValueChange = {inputUnidade = it},
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                label = { Text(text = "Valor")},
+                singleLine = true)
 
-        Text (text = "Resultado:")
+            Spacer (modifier = Modifier.height(8.dp))
 
-        Text (text = convertArea(inputUnidade = inputUnidade,
-            itemPosition1 = itemPosition1.value,
-            itemPosition2 = itemPosition2.value))
+            Text (text = "Para:",
+                style = MaterialTheme.typography.titleMedium)
+
+            Spacer (modifier = Modifier.height(8.dp))
+
+            ModeloMenu (isDropDownExpanded = remember { mutableStateOf(false) },
+                itemPosition = itemPosition2,
+                opcoes = unidades)
+
+            Spacer (modifier = Modifier.height(8.dp))
+
+            Text (text = "Resultado:",
+                style = MaterialTheme.typography.titleMedium)
+
+            Spacer (modifier = Modifier.height(8.dp))
+
+            Text (text = convertArea(inputUnidade = inputUnidade,
+                itemPosition1 = itemPosition1.value,
+                itemPosition2 = itemPosition2.value),
+                style = MaterialTheme.typography.headlineMedium)
+        }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ComprimentoScreen(modifier: Modifier = Modifier,
                       onGoBack: () -> Unit) {
