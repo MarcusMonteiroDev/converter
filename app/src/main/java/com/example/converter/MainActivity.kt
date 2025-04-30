@@ -52,7 +52,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
@@ -78,6 +77,16 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.ui.text.style.LineHeightStyle
+
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.text.style.TextAlign
+
 
 //--------------------------------------------------------------------------------------------------
 // Lista das telas do aplicativo
@@ -842,7 +851,22 @@ fun MainApp (modifier: Modifier = Modifier) {
             // Mapeia a rota Area para o composable AreaScreen
             composable (route = Screen.Area.name) {
                 // Chama o composable da tela de conversão de área
-                AreaScreen (onGoBack = {navController.navigateUp()})
+                UnitScreen(modifier = modifier,
+                    onGoBack = {navController.navigateUp()},
+                    titulo = "área",
+                    unidades = listOf(
+                        "Quilômetro quadrado (km²)",
+                        "Hectare (ha)",
+                        "Are (a)",
+                        "Metro quadrado (m²)",
+                        "Decímetro quadrado (dm²)",
+                        "Centímetro quadrado (cm²)",
+                        "Milímetro quadrado (mm²)",
+                        "Micrômetro quadrado (µm²)",
+                        "Nanômetro quadrado (nm²)"
+                    ),
+                    tipo_conversao = 1
+                )
             }
             // Mapeia a rota Comprimento para o composable ComprimentoScreen
             composable (route = Screen.Comprimento.name) {
@@ -1033,479 +1057,110 @@ fun HomeScreen(
     onNavigateToVelocidade: () -> Unit,
     onNavigateToVolume: () -> Unit,
 ) {
+    // Lista de opções de conversão (Label e Ação)
+    val conversionItems = listOf(
+        "Área" to onNavigateToArea,
+        "Comprimento" to onNavigateToComprimento,
+        "Dados" to onNavigateToDados,
+        "Massa" to onNavigateToMassa,
+        "Pressão" to onNavigateToPressao,
+        "Temperatura" to onNavigateToTemperatura,
+        "Tempo" to onNavigateToTempo,
+        "Velocidade" to onNavigateToVelocidade,
+        "Volume" to onNavigateToVolume
+    )
+
     // Coluna principal de sustentação do aplicativo
-    Column (modifier = Modifier
-        .fillMaxSize()
-        .border(3.dp, Color.Blue),) {
-        // Sucessão de linhas em que serão disponibilizados os botões que levam para as telas de conversão
-        // Primeira linha
-        Row () {
-            // Área
-            Button(onClick = {onNavigateToArea()}) {
-                Text(text = "Área")
-            }
-            // Comprimento
-            Button(onClick = {onNavigateToComprimento()}) {
-                Text(text = "Comprimento")
-            }
-            // Dados
-            Button(onClick = {onNavigateToDados()}) {
-                Text(text = "Dados ")
-            }
-        }
-        // Segunda linha
-        Row () {
-            // Massa
-            Button(onClick = {onNavigateToMassa()}) {
-                Text(text = "Massa")
-            }
-            // Pressão
-            Button(onClick = {onNavigateToPressao()}) {
-                Text(text = "Pressão")
-            }
-            // Temperatura
-            Button(onClick = {onNavigateToTemperatura()}) {
-                Text(text = "Temperatura")
-            }
-        }
-        // Terceira linha
-        Row () {
-            // Tempo
-            Button(onClick = {onNavigateToTempo()}) {
-                Text(text = "Tempo")
-            }
-            // Velocidade
-            Button(onClick = {onNavigateToVelocidade()}) {
-                Text(text = "Velocidade")
-            }
-            // Volume
-            Button(onClick = {onNavigateToVolume()}) {
-                Text(text = "Volume")
-            }
-        }
-    }
-}
-
-// Tela de conversão de área
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun AreaScreen(
-    modifier: Modifier = Modifier,      // Modificador para customização da tela
-    onGoBack: () -> Unit                // Função de retorno à tela anterior
-) {
-    // Unidades de medida disponíveis
-    val unidades = listOf(
-        "Quilômetro quadrado (km²)",
-        "Hectare (ha)",
-        "Are (a)",
-        "Metro quadrado (m²)",
-        "Decímetro quadrado (dm²)",
-        "Centímetro quadrado (cm²)",
-        "Milímetro quadrado (mm²)",
-        "Micrômetro quadrado (µm²)",
-        "Nanômetro quadrado (nm²)"
-    )
-
-    // Registra o input do usuário
-    var inputUnidade by remember { mutableStateOf("") }
-    // Armazenam a posição do menu expandido para saber quais unidades estão sendo convertidas
-    val itemPosition1 = remember { mutableStateOf(0) }
-    val itemPosition2 = remember { mutableStateOf(1) }
-
-    // Tela principal da activity
-    // Define o scaffold com o cabeçalho e o conteúdo
-    Scaffold (
-        // Cabeçalho da tela (barra no topo)
-        topBar = {
-            TopAppBar (title = { Text(text = "Converter área") },
-                navigationIcon = { IconButton(onClick = {onGoBack()}) {
-                    Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Voltar") }
-                }
-            )
-        }
-    ) {innerPadding ->  // Espaçamento interno para o conteúdo (promovido pelo scaffold)
-        // Linha divisória entre o cabeçalho e o conteúdo
-        HorizontalDivider(
-            modifier = Modifier.padding(innerPadding),
-            thickness = 1.dp,
-            color = MaterialTheme.colorScheme.outline,
-        )
-        // Coluna principal da tela
-        Column (modifier = Modifier
+    Column (
+        modifier = Modifier
             .fillMaxSize()
-            .padding(innerPadding)
-            .padding(16.dp),
-            horizontalAlignment = Alignment.Start)
-        {
-            // Texto da tela
-            Text (text = "Converter de",
-                style = MaterialTheme.typography.titleMedium)
-            // Espaçamento
-            Spacer (modifier = Modifier.height(8.dp))
-            // Menu expandido para selecionar a unidade de entrada
-            ModeloMenu (
-                modifier = Modifier.fillMaxWidth(),
-                isDropDownExpanded = remember { mutableStateOf(false) },
-                itemPosition = itemPosition1,
-                opcoes = unidades
-            )
-            // Espaçamento
-            Spacer (modifier = Modifier.height(8.dp))
-            // Campo de texto para inserir o valor a ser convertido
-            TextField (modifier = Modifier.fillMaxWidth(),
-                colors = TextFieldDefaults.colors(
-                    focusedIndicatorColor = MaterialTheme.colorScheme.primary,
-                    cursorColor = MaterialTheme.colorScheme.primary,
-                    focusedLabelColor = MaterialTheme.colorScheme.primary),
-                value = inputUnidade,
-                onValueChange = {inputUnidade = it},
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                label = { Text(text = "Valor")},
-                singleLine = true)
-            // Espaçamento
-            Spacer (modifier = Modifier.height(8.dp))
-            // Texto da tela
-            Text (text = "Para:",
-                style = MaterialTheme.typography.titleMedium)
-            // Espaçamento
-            Spacer (modifier = Modifier.height(8.dp))
-            // Menu expandido para selecionar a unidade de saída
-            ModeloMenu (
-                modifier = Modifier.fillMaxWidth(),
-                isDropDownExpanded = remember { mutableStateOf(false) },
-                itemPosition = itemPosition2,
-                opcoes = unidades
-            )
-            // Espaçamento
-            Spacer(modifier = Modifier.height(24.dp)) // Espaço antes da seção de resultado
-            // Caixa de resultado
-            Surface(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp),
-                color = MaterialTheme.colorScheme.surfaceVariant,
-                tonalElevation = 2.dp
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Resultado:",
-                        style = MaterialTheme.typography.titleMedium
-                    )
-                    // Espaçamento
-                    Spacer(modifier = Modifier.height(8.dp)) // Espaço entre o rótulo e o valor
-                    // Resultado da conversão
-                    Text(
-                        text = convertArea(
-                            inputUnidade = inputUnidade,
-                            itemPosition1 = itemPosition1.value,
-                            itemPosition2 = itemPosition2.value),
-                        style = MaterialTheme.typography.displaySmall,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
-            }
-        }
-    }
-}
-
-// Tela de conversão de comprimento
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ComprimentoScreen(
-    modifier: Modifier = Modifier,      // Modificador para customização da tela
-    onGoBack: () -> Unit                // Função de retorno à tela anterior
-) {
-    UnitScreen(modifier = modifier, onGoBack = onGoBack, titulo = "Comprimento",
-        unidades = listOf("Unidade 1", "Unidade 2", "Unidade 3"),
-        tipo_conversao = 2)
-}
-
-// Tela de conversão de dados
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun DadosScreen(
-    modifier: Modifier = Modifier,      // Modificador para customização da tela
-    onGoBack: () -> Unit                // Função de retorno à tela anterior
-) {
-    // Unidades de medida disponíveis
-    val unidades = listOf(
-        "unidades"
-    )
-
-    // Registra o input do usuário
-    var inputUnidade by remember { mutableStateOf("") }
-    // Armazenam a posição do menu expandido para saber quais unidades estão sendo convertidas
-    val itemPosition1 = remember { mutableStateOf(0) }
-    val itemPosition2 = remember { mutableStateOf(1) }
-
-    // Tela principal da activity
-    // Define o scaffold com o cabeçalho e o conteúdo
-    Scaffold (
-        // Cabeçalho da tela (barra no topo)
-        topBar = {
-            TopAppBar (title = { Text(text = "Converter dados") },
-                navigationIcon = { IconButton(onClick = {onGoBack()}) {
-                    Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Voltar") }
-                }
-            )
-        }
-    ) {innerPadding ->  // Espaçamento interno para o conteúdo (promovido pelo scaffold)
-        // Linha divisória entre o cabeçalho e o conteúdo
-        HorizontalDivider(
-            modifier = Modifier.padding(innerPadding),
-            thickness = 1.dp,
-            color = MaterialTheme.colorScheme.outline,
+            .padding(16.dp) // Padding geral da tela
+    ) {
+        // Título da Tela
+        Text (
+            text = "Selecione o tipo de conversão:",
+            style = MaterialTheme.typography.headlineSmall, // Estilo do título
+            modifier = Modifier.padding(bottom = 16.dp) // Espaço abaixo do título
         )
-        // Coluna principal da tela
-        Column (modifier = Modifier
-            .fillMaxSize()
-            .padding(innerPadding)
-            .padding(16.dp),
-            horizontalAlignment = Alignment.Start)
-        {
-            // Texto da tela
-            Text (text = "Converter de",
-                style = MaterialTheme.typography.titleMedium)
-            // Espaçamento
-            Spacer (modifier = Modifier.height(8.dp))
-            // Menu expandido para selecionar a unidade de entrada
-            ModeloMenu (
-                modifier = Modifier.fillMaxWidth(),
-                isDropDownExpanded = remember { mutableStateOf(false) },
-                itemPosition = itemPosition1,
-                opcoes = unidades
-            )
-            // Espaçamento
-            Spacer (modifier = Modifier.height(8.dp))
-            // Campo de texto para inserir o valor a ser convertido
-            TextField (modifier = Modifier.fillMaxWidth(),
-                colors = TextFieldDefaults.colors(
-                    focusedIndicatorColor = MaterialTheme.colorScheme.primary,
-                    cursorColor = MaterialTheme.colorScheme.primary,
-                    focusedLabelColor = MaterialTheme.colorScheme.primary),
-                value = inputUnidade,
-                onValueChange = {inputUnidade = it},
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                label = { Text(text = "Valor")},
-                singleLine = true)
-            // Espaçamento
-            Spacer (modifier = Modifier.height(8.dp))
-            // Texto da tela
-            Text (text = "Para:",
-                style = MaterialTheme.typography.titleMedium)
-            // Espaçamento
-            Spacer (modifier = Modifier.height(8.dp))
-            // Menu expandido para selecionar a unidade de saída
-            ModeloMenu (
-                modifier = Modifier.fillMaxWidth(),
-                isDropDownExpanded = remember { mutableStateOf(false) },
-                itemPosition = itemPosition2,
-                opcoes = unidades
-            )
-            // Espaçamento
-            Spacer(modifier = Modifier.height(24.dp)) // Espaço antes da seção de resultado
-            // Caixa de resultado
-            Surface(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp),
-                color = MaterialTheme.colorScheme.surfaceVariant,
-                tonalElevation = 2.dp
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Resultado:",
-                        style = MaterialTheme.typography.titleMedium
-                    )
-                    // Espaçamento
-                    Spacer(modifier = Modifier.height(8.dp)) // Espaço entre o rótulo e o valor
-                    // Resultado da conversão
-                    Text(
-                        text = convertArea(
-                            inputUnidade = inputUnidade,
-                            itemPosition1 = itemPosition1.value,
-                            itemPosition2 = itemPosition2.value),
-                        style = MaterialTheme.typography.displaySmall,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
+
+        // Grade Vertical para os itens de conversão
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(3), // Define 3 colunas
+            horizontalArrangement = Arrangement.spacedBy(8.dp), // Espaço horizontal entre cards
+            verticalArrangement = Arrangement.spacedBy(8.dp),   // Espaço vertical entre cards
+            modifier = Modifier.fillMaxSize() // Ocupa o espaço restante
+        ) {
+            // Cria um card para cada item na lista conversionItems
+            items(conversionItems) { (label, navigateAction) ->
+                ConversionTypeCard (
+                    label = label,
+                    // Passa a ação de navegação para o parâmetro onClick (convenção corrigida)
+                    onClick = navigateAction
+                )
             }
         }
     }
 }
 
-// Tela de conversão de massa
-@OptIn(ExperimentalMaterial3Api::class)
+// Card individual para cada tipo de conversão na grade
+@OptIn(ExperimentalMaterial3Api::class) // Necessário para Card onClick
 @Composable
-fun MassaScreen(
-    modifier: Modifier = Modifier,      // Modificador para customização da tela
-    onGoBack: () -> Unit                // Função de retorno à tela anterior
+fun ConversionTypeCard (
+    label: String,
+    onClick: () -> Unit, // <<-- Parâmetro renomeado para onClick (convenção)
+    modifier: Modifier = Modifier
 ) {
-    // Unidades de medida disponíveis
-    val unidades = listOf(
-        "unidades"
-    )
-
-    // Registra o input do usuário
-    var inputUnidade by remember { mutableStateOf("") }
-    // Armazenam a posição do menu expandido para saber quais unidades estão sendo convertidas
-    val itemPosition1 = remember { mutableStateOf(0) }
-    val itemPosition2 = remember { mutableStateOf(1) }
-
-    // Tela principal da activity
-    // Define o scaffold com o cabeçalho e o conteúdo
-    Scaffold (
-        // Cabeçalho da tela (barra no topo)
-        topBar = {
-            TopAppBar (title = { Text(text = "Converter massa") },
-                navigationIcon = { IconButton(onClick = {onGoBack()}) {
-                    Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Voltar") }
-                }
+    Card(
+        onClick = onClick, // <<-- Usa o parâmetro onClick
+        modifier = modifier
+            // .aspectRatio(1f) // Descomente se quiser cards quadrados
+            .padding(4.dp), // Pequeno espaçamento externo para o card não colar nos outros
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp), // Elevação/sombra
+    ) {
+        // Conteúdo dentro do Card
+        Column(
+            modifier = Modifier
+                .fillMaxSize() // Ocupa  o espaço do Card completo
+                .padding(8.dp), // Padding interno
+            horizontalAlignment = Alignment.CenterHorizontally, // Centraliza horizontalmente
+            verticalArrangement = Arrangement.Center // Centraliza verticalmente
+        ) {
+            // Ícone representativo (substitua pelos ícones corretos)
+            Icon(
+                painter = when(label) {
+                    "Área" -> painterResource(R.drawable.icon_area)
+                    "Comprimento" -> painterResource(R.drawable.icon_comprimento)
+                    "Dados" -> painterResource(R.drawable.icon_data)
+                    "Massa" -> painterResource(R.drawable.icon_massa)
+                    "Pressão" -> painterResource(R.drawable.icon_pressao)
+                    "Tempo" -> painterResource(R.drawable.icon_tempo)
+                    "Volume" -> painterResource(R.drawable.icon_volume)
+                    "Temperatura" -> painterResource(R.drawable.icon_temperature)
+                    "Velocidade" -> painterResource(R.drawable.icon_velocidade)
+                    else -> painterResource(R.drawable.ic_launcher_background)
+                },
+                contentDescription = null, // O texto já descreve a ação
+                modifier = Modifier.size(40.dp), // Tamanho do ícone (ajuste se necessário)
+                tint = MaterialTheme.colorScheme.primary // Usa a cor primária do tema
             )
-        }
-    ) {innerPadding ->  // Espaçamento interno para o conteúdo (promovido pelo scaffold)
-        // Linha divisória entre o cabeçalho e o conteúdo
-        HorizontalDivider(
-            modifier = Modifier.padding(innerPadding),
-            thickness = 1.dp,
-            color = MaterialTheme.colorScheme.outline,
-        )
-        // Coluna principal da tela
-        Column (modifier = Modifier
-            .fillMaxSize()
-            .padding(innerPadding)
-            .padding(16.dp),
-            horizontalAlignment = Alignment.Start)
-        {
-            // Texto da tela
-            Text (text = "Converter de",
-                style = MaterialTheme.typography.titleMedium)
-            // Espaçamento
-            Spacer (modifier = Modifier.height(8.dp))
-            // Menu expandido para selecionar a unidade de entrada
-            ModeloMenu (
-                modifier = Modifier.fillMaxWidth(),
-                isDropDownExpanded = remember { mutableStateOf(false) },
-                itemPosition = itemPosition1,
-                opcoes = unidades
+            // Espaçador entre Ícone e Texto
+            Spacer(modifier = Modifier.height(8.dp))
+            // Texto com o nome do tipo de conversão
+            Text(
+                text = label,
+                style = MaterialTheme.typography.bodyMedium, // Estilo do texto
+                textAlign = TextAlign.Center // Garante centralização se o texto quebrar linha
             )
-            // Espaçamento
-            Spacer (modifier = Modifier.height(8.dp))
-            // Campo de texto para inserir o valor a ser convertido
-            TextField (modifier = Modifier.fillMaxWidth(),
-                colors = TextFieldDefaults.colors(
-                    focusedIndicatorColor = MaterialTheme.colorScheme.primary,
-                    cursorColor = MaterialTheme.colorScheme.primary,
-                    focusedLabelColor = MaterialTheme.colorScheme.primary),
-                value = inputUnidade,
-                onValueChange = {inputUnidade = it},
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                label = { Text(text = "Valor")},
-                singleLine = true)
-            // Espaçamento
-            Spacer (modifier = Modifier.height(8.dp))
-            // Texto da tela
-            Text (text = "Para:",
-                style = MaterialTheme.typography.titleMedium)
-            // Espaçamento
-            Spacer (modifier = Modifier.height(8.dp))
-            // Menu expandido para selecionar a unidade de saída
-            ModeloMenu (
-                modifier = Modifier.fillMaxWidth(),
-                isDropDownExpanded = remember { mutableStateOf(false) },
-                itemPosition = itemPosition2,
-                opcoes = unidades
-            )
-            // Espaçamento
-            Spacer(modifier = Modifier.height(24.dp)) // Espaço antes da seção de resultado
-            // Caixa de resultado
-            Surface(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp),
-                color = MaterialTheme.colorScheme.surfaceVariant,
-                tonalElevation = 2.dp
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "Resultado:",
-                        style = MaterialTheme.typography.titleMedium
-                    )
-                    // Espaçamento
-                    Spacer(modifier = Modifier.height(8.dp)) // Espaço entre o rótulo e o valor
-                    // Resultado da conversão
-                    Text(
-                        text = convertArea(
-                            inputUnidade = inputUnidade,
-                            itemPosition1 = itemPosition1.value,
-                            itemPosition2 = itemPosition2.value),
-                        style = MaterialTheme.typography.displaySmall,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
-            }
         }
     }
 }
 
-@Composable
-fun PressaoScreen(modifier: Modifier = Modifier,
-                  onGoBack: () -> Unit) {
-    Text (text = "Pressao Screen")
-}
 
-@Composable
-fun TemperaturaScreen(modifier: Modifier = Modifier,
-                      onGoBack: () -> Unit) {
-    Text (text = "Temperatura Screen")
-}
 
-@Composable
-fun TempoScreen(modifier: Modifier = Modifier,
-                onGoBack: () -> Unit) {
-    Text (text = "Tempo Screen")
-}
-
-@Composable
-fun VelocidadeScreen(modifier: Modifier = Modifier,
-                     onGoBack: () -> Unit) {
-    Text (text = "Velocidade Screen")
-}
-
-@Composable
-fun VolumeScreen(modifier: Modifier = Modifier,
-                 onGoBack: () -> Unit) {
-    Text (text = "Volume Screen")
-}
-
-/*
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     ConverterTheme {
         MainApp()
     }
-}
- */
-
-@Preview (showBackground = true)
-@Composable
-fun AreaScreenPreview() {
-    AreaScreen(modifier = Modifier,
-        onGoBack = {})
 }
