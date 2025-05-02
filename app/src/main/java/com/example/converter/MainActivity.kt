@@ -99,7 +99,19 @@ enum class Screen {
     Temperatura,
     Tempo,
     Velocidade,
-    Volume
+    Volume,
+    Energia,
+    Potencia,
+    Forca,
+    Angulo,
+    Frequencia,
+    Torque,
+    Capacitancia,
+    Carga_eletrica,
+    Corrente_Eletrica,
+    Resistencia,
+    Tensao,
+    Densidade
 }
 //--------------------------------------------------------------------------------------------------
 // Funções ultilitárias
@@ -133,25 +145,38 @@ fun MainApp (modifier: Modifier = Modifier) {
             modifier = modifier.padding(innerPadding)
         ) {
             // Mapeia a rota Home para o composable HomeScreen
-            composable (route = Screen.Home.name) {
+            composable(route = Screen.Home.name) {
                 // Chama o composable da tela inicial
                 HomeScreen(
-                    onNavigateToArea = {navController.navigate(Screen.Area.name)},
-                    onNavigateToTemperatura = {navController.navigate(Screen.Temperatura.name)},
-                    onNavigateToComprimento = {navController.navigate(Screen.Comprimento.name)},
-                    onNavigateToDados = {navController.navigate(Screen.Dados.name)},
-                    onNavigateToMassa = {navController.navigate(Screen.Massa.name)},
-                    onNavigateToPressao = {navController.navigate(Screen.Pressao.name)},
-                    onNavigateToTempo = {navController.navigate(Screen.Tempo.name)},
-                    onNavigateToVelocidade = {navController.navigate(Screen.Velocidade.name)},
-                    onNavigateToVolume = {navController.navigate(Screen.Volume.name)},
+                    onNavigateToArea = { navController.navigate(Screen.Area.name) },
+                    onNavigateToTemperatura = { navController.navigate(Screen.Temperatura.name) },
+                    onNavigateToComprimento = { navController.navigate(Screen.Comprimento.name) },
+                    onNavigateToDados = { navController.navigate(Screen.Dados.name) },
+                    onNavigateToMassa = { navController.navigate(Screen.Massa.name) },
+                    onNavigateToPressao = { navController.navigate(Screen.Pressao.name) },
+                    onNavigateToTempo = { navController.navigate(Screen.Tempo.name) },
+                    onNavigateToVelocidade = { navController.navigate(Screen.Velocidade.name) },
+                    onNavigateToVolume = { navController.navigate(Screen.Volume.name) },
+                    onNavigateToEnergia = { navController.navigate(Screen.Energia.name) },
+                    onNavigateToPotencia = { navController.navigate(Screen.Potencia.name) },
+                    onNavigateToForca = { navController.navigate(Screen.Forca.name) },
+                    onNavigateToAngulo = { navController.navigate(Screen.Angulo.name) },
+                    onNavigateToFrequencia = { navController.navigate(Screen.Frequencia.name) },
+                    onNavigateToTorque = { navController.navigate(Screen.Torque.name) },
+                    onNavigateToCapacitancia = { navController.navigate(Screen.Capacitancia.name) },
+                    onNavigateToCarga_eletrica = { navController.navigate(Screen.Carga_eletrica.name) },
+                    onNavigateToCorrente_Eletrica = { navController.navigate(Screen.Corrente_Eletrica.name) },
+                    onNavigateToResistencia = { navController.navigate(Screen.Resistencia.name) },
+                    onNavigateToTensao = { navController.navigate(Screen.Tensao.name) },
+                    onNavigateToDensidade = { navController.navigate(Screen.Densidade.name) }
                 )
             }
-            // Mapeia a rota Area para o composable AreaScreen
-            composable (route = Screen.Area.name) {
+            // Mapeia a rota Área para a tela de conversão
+            composable(route = Screen.Area.name) {
                 // Chama o composable da tela de conversão de área
-                UnitScreen(modifier = modifier,
-                    onGoBack = {navController.navigateUp()},
+                UnitScreen(
+                    modifier = modifier,
+                    onGoBack = { navController.navigateUp() },
                     titulo = "área",
                     unidades = listOf(
                         "Quilômetro quadrado (km²)",
@@ -167,11 +192,12 @@ fun MainApp (modifier: Modifier = Modifier) {
                     tipo_conversao = 1
                 )
             }
-            // Mapeia a rota Comprimento para o composable ComprimentoScreen
-            composable (route = Screen.Comprimento.name) {
+            // Mapeia a rota Comprimento para a tela de conversão
+            composable(route = Screen.Comprimento.name) {
                 // Chama o composable da tela de conversão de comprimento
-                UnitScreen(modifier = modifier,
-                    onGoBack = {navController.navigateUp()},
+                UnitScreen(
+                    modifier = modifier,
+                    onGoBack = { navController.navigateUp() },
                     titulo = "comprimento",
                     unidades = listOf<String>(
                         "Quilômetro (km)",
@@ -192,30 +218,32 @@ fun MainApp (modifier: Modifier = Modifier) {
                     tipo_conversao = 2
                 )
             }
-            // Mapeia a rota Dados para o composable DadosScreen
-            composable (route = Screen.Dados.name) {
+            // Mapeia a rota Dados para a tela de conversão
+            composable(route = Screen.Dados.name) {
                 // Chama o composable da tela de conversão de dados
-                UnitScreen(modifier = modifier,
-                    onGoBack = {navController.navigateUp()},
+                UnitScreen(
+                    modifier = modifier,
+                    onGoBack = { navController.navigateUp() },
                     titulo = "dados",
-                    unidades =  listOf<String>(
-                    "Bit (b)",
-                    "Byte (B)",
-                    "Kilobyte (KB)",
-                    "Megabyte (MB)",
-                    "Gigabyte (GB)",
-                    "Terabyte (TB)",
-                    "Petabyte (PB)",
-                    "Exabyte (EB)"
-                ),
+                    unidades = listOf<String>(
+                        "Bit (b)",
+                        "Byte (B)",
+                        "Kilobyte (KB)",
+                        "Megabyte (MB)",
+                        "Gigabyte (GB)",
+                        "Terabyte (TB)",
+                        "Petabyte (PB)",
+                        "Exabyte (EB)"
+                    ),
                     tipo_conversao = 3
                 )
             }
-            // Mapeia a rota Massa para o composable MassaScreen
-            composable (route = Screen.Massa.name) {
+            // Mapeia a rota Massa para a tela de conversão
+            composable(route = Screen.Massa.name) {
                 // Chama o composable da tela de conversão de massa
-                UnitScreen(modifier = modifier,
-                    onGoBack = {navController.navigateUp()},
+                UnitScreen(
+                    modifier = modifier,
+                    onGoBack = { navController.navigateUp() },
                     titulo = "massa",
                     unidades = listOf<String>(
                         "Tonelada (t)",
@@ -235,11 +263,12 @@ fun MainApp (modifier: Modifier = Modifier) {
                     tipo_conversao = 4
                 )
             }
-            // Mapeia a rota Pressao para o composable PressaoScreen
-            composable (route = Screen.Pressao.name) {
+            // Mapeia a rota Pressao para a tela de conversão
+            composable(route = Screen.Pressao.name) {
                 // Chama o composable da tela de conversão de pressão
-                UnitScreen(modifier = modifier,
-                    onGoBack = {navController.navigateUp()},
+                UnitScreen(
+                    modifier = modifier,
+                    onGoBack = { navController.navigateUp() },
                     titulo = "pressão",
                     unidades = listOf<String>(
                         "Pascal (Pa)",
@@ -256,11 +285,12 @@ fun MainApp (modifier: Modifier = Modifier) {
                     tipo_conversao = 5
                 )
             }
-            // Mapeia a rota Temperatura para o composable TemperaturaScreen
-            composable (route = Screen.Temperatura.name) {
+            // Mapeia a rota Temperatura para a tela de conversão
+            composable(route = Screen.Temperatura.name) {
                 // Chama o composable da tela de conversão de temperatura
-                UnitScreen(modifier = modifier,
-                    onGoBack = {navController.navigateUp()},
+                UnitScreen(
+                    modifier = modifier,
+                    onGoBack = { navController.navigateUp() },
                     titulo = "temperatura",
                     unidades = listOf<String>(
                         "Celsius (°C)",
@@ -270,11 +300,12 @@ fun MainApp (modifier: Modifier = Modifier) {
                     tipo_conversao = 6
                 )
             }
-            // Mapeia a rota Tempo para o composable TempoScreen
-            composable (route = Screen.Tempo.name) {
+            // Mapeia a rota Tempo para a tela de conversão
+            composable(route = Screen.Tempo.name) {
                 // Chama o composable da tela de conversão de tempo
-                UnitScreen(modifier = modifier,
-                    onGoBack = {navController.navigateUp()},
+                UnitScreen(
+                    modifier = modifier,
+                    onGoBack = { navController.navigateUp() },
                     titulo = "tempo",
                     unidades = listOf<String>(
                         "Segundo (s)",
@@ -293,11 +324,12 @@ fun MainApp (modifier: Modifier = Modifier) {
                     tipo_conversao = 7
                 )
             }
-            // Mapeia a rota Velocidade para o composable VelocidadeScreen
-            composable (route = Screen.Velocidade.name) {
+            // Mapeia a rota Velocidade para a tela de conversão
+            composable(route = Screen.Velocidade.name) {
                 // Chama o composable da tela de conversão de velocidade
-                UnitScreen(modifier = modifier,
-                    onGoBack = {navController.navigateUp()},
+                UnitScreen(
+                    modifier = modifier,
+                    onGoBack = { navController.navigateUp() },
                     titulo = "velocidade",
                     unidades = listOf<String>(
                         "Metro por segundo (m/s)",
@@ -311,11 +343,12 @@ fun MainApp (modifier: Modifier = Modifier) {
                     tipo_conversao = 8
                 )
             }
-            // Mapeia a rota Volume para o composable VolumeScreen
-            composable (route = Screen.Volume.name) {
+            // Mapeia a rota Volume para a tela de conversão
+            composable(route = Screen.Volume.name) {
                 // Chama o composable da tela de conversão de volume
-                UnitScreen(modifier = modifier,
-                    onGoBack = {navController.navigateUp()},
+                UnitScreen(
+                    modifier = modifier,
+                    onGoBack = { navController.navigateUp() },
                     titulo = "volume",
                     unidades = listOf<String>(
                         "Metro cúbico (m³)",
@@ -338,6 +371,191 @@ fun MainApp (modifier: Modifier = Modifier) {
                     tipo_conversao = 9
                 )
             }
+            // Mapeia a rota Energia para a tela de conversão
+            composable(route = Screen.Energia.name) {
+                // Chama o composable da tela de conversão de energia
+                UnitScreen(
+                    modifier = modifier,
+                    onGoBack = { navController.navigateUp() },
+                    titulo = "energia",
+                    unidades = listOf<String>(
+                        "Joule (J)",
+                        "Caloria (cal)",
+                        "Quilocaloria (kcal / Cal)",
+                        "Quilowatt-hora (kWh",
+                        "Elétron-volt (eV)",
+                        "BTU (British Thermal Unit)",
+                        "Pé-libra (ft-lb)"
+                    ),
+                    tipo_conversao = 10
+                )
+            }
+            // Mapeia a rota Potencia para a tela de conversão
+            composable(route = Screen.Potencia.name) {
+                // Chama o composable da tela de conversão de potência
+                UnitScreen(
+                    modifier = modifier,
+                    onGoBack = { navController.navigateUp() },
+                    titulo = "potencia",
+                    unidades = listOf<String>(
+                        "Miliwatt",
+                        "Watt (W)",
+                        "Kilowatt (kW)",
+                        "Megawatt (MW)",
+                        "Joule por segundo (J/s)",
+                        "Horse-power (hp)",
+                        "Cavalo-vapor",
+                        "Cavalo-de-força elétrico",
+                        "Cavalo boiler",
+                        "Pés-libra por minuto",
+                        "Pés-libra por segundo",
+                        "dBm (dBm)",
+                        "Calorias por hora"
+                    ),
+                    tipo_conversao = 11
+                )
+            }
+            // Mapeia a rota Forca para a tela de conversão
+            composable(route = Screen.Forca.name) {
+                // Chama o composable da tela de conversão de forca
+                UnitScreen(
+                    modifier = modifier,
+                    onGoBack = { navController.navigateUp() },
+                    titulo = "forca",
+                    unidades = listOf<String>(
+                        "Nanonewton (nN)",
+                        "Micronewton (µN)",
+                        "Mili Newton (mN)",
+                        "Newton (N)",
+                        "Quilonewton (kN)",
+                        "Meganewton",
+                        "Giganewton (GN)",
+                        "Dina (dyn)",
+                        "Joule por metro (J/m)",
+                        "Kilograma Força (kgf)",
+                        "Tonelada-força (tnf)"
+                    ),
+                    tipo_conversao = 12
+                )
+            }
+            // Mapeia a rota Angulo para a tela de conversão
+            composable(route = Screen.Angulo.name) {
+                // Chama o composable da tela de conversão de angulo
+                UnitScreen(
+                    modifier = modifier,
+                    onGoBack = { navController.navigateUp() },
+                    titulo = "angulo",
+                    unidades = listOf<String>(
+                        "Grau (°)",
+                        "Radiano (rad)",
+                        "Gradiano (grad)"
+                    ),
+                    tipo_conversao = 13
+                )
+            }
+            // Mapeia a rota Frequencia para a tela de conversão
+            composable(route = Screen.Frequencia.name) {
+                // Chama o composable da tela de conversão de frequência
+                UnitScreen(
+                    modifier = modifier,
+                    onGoBack = { navController.navigateUp() },
+                    titulo = "frequencia",
+                    unidades = listOf<String>(
+                        "Nanohertz (nHz)",
+                        "Microhertz (µHz)",
+                        "Milihertz (mHz)",
+                        "Hertz (Hz)",
+                        "Kilohertz (kHz)",
+                        "Megahertz (MHz)",
+                        "Gigahertz (GHz)",
+                        "Terahertz (THz)",
+                        "Ciclos por segundo (cps)",
+                        "Rotações por minuto (rpm)",
+                        "Batidas por minuto (BPM)",
+                        "Radianos por segundo (rad/s)",
+                        "Radianos por minuto",
+                        "Radianos por hora",
+                        "Radianos por dia"
+                    ),
+                    tipo_conversao = 14
+                )
+            }
+            // Mapeia a rota Torque para a tela de conversão
+            composable(route = Screen.Torque.name) {
+                // Chama o composable da tela de conversão de torque
+                UnitScreen(
+                    modifier = modifier,
+                    onGoBack = { navController.navigateUp() },
+                    titulo = "torque",
+                    unidades = listOf<String>(
+                        "Newton-metro (N·m)",
+                        "Quilonewton-metro (kN·m)",
+                        "Milinewton-metro (mN·m)",
+                        "Quilograma-força metro (kgf·m)",
+                        "Quilograma-força centímetro (kgf·cm)",
+                        "Grama-força centímetro (gf·cm)",
+                        "Libra-força pé (lbf·ft)",
+                        "Libra-força polegada (lbf·in)",
+                        "Onça-força polegada (ozf·in)",
+                        "Dina-centímetro (dyn·cm)"
+                    ),
+                    tipo_conversao = 15
+                )
+            }
+            // Mapeia a rota Capacitancia para a tela de conversão
+            composable(route = Screen.Capacitancia.name) {
+                // Chama o composable da tela de conversão de capacitancia
+                UnitScreen(modifier = modifier,
+                    onGoBack = { navController.navigateUp() },
+                    titulo = "capacitância",
+                    unidades = listOf<String>(),
+                    tipo_conversao = 16)
+            }
+            // Mapeia a rota carga eletrica para a tela de conversão
+            composable(route = Screen.Carga_eletrica.name) {
+                // Chama o composable da tela de conversão de carga elétrica
+                UnitScreen(modifier = modifier,
+                    onGoBack = { navController.navigateUp() },
+                    titulo = "carga elétrica",
+                    unidades = listOf<String>(),
+                    tipo_conversao = 17)
+            }
+            // Mapeia a rota corrente eletrica para a tela de conversão
+            composable(route = Screen.Corrente_Eletrica.name) {
+                // Chama o composable da tela de conversão de corrente elétrica
+                UnitScreen(modifier = modifier,
+                    onGoBack = { navController.navigateUp() },
+                    titulo = "corrente elétrica",
+                    unidades = listOf<String>(),
+                    tipo_conversao = 18)
+            }
+            // Mapeia a rota resistencia para a tela de conversão
+            composable(route = Screen.Resistencia.name) {
+                // Chama o composable da tela de conversão de resistenca
+                UnitScreen(modifier = modifier,
+                    onGoBack = { navController.navigateUp() },
+                    titulo = "resistência",
+                    unidades = listOf<String>(),
+                    tipo_conversao = 19)
+            }
+            // Mapeia a rota resistencia para a tela de tensao
+            composable(route = Screen.Tensao.name) {
+                // Chama o composable da tela de conversão de tensao
+                UnitScreen(modifier = modifier,
+                    onGoBack = { navController.navigateUp() },
+                    titulo = "tensão",
+                    unidades = listOf<String>(),
+                    tipo_conversao = 20)
+            }
+            // Mapeia a rota resistencia para a tela de densidade
+            composable(route = Screen.Densidade.name) {
+                // Chama o composable da tela de conversão de densidade
+                UnitScreen(modifier = modifier,
+                    onGoBack = { navController.navigateUp() },
+                    titulo = "densidade",
+                    unidades = listOf<String>(),
+                    tipo_conversao = 21)
+            }
         }
     }
 }
@@ -355,6 +573,18 @@ fun HomeScreen(
     onNavigateToTempo: () -> Unit,
     onNavigateToVelocidade: () -> Unit,
     onNavigateToVolume: () -> Unit,
+    onNavigateToEnergia: () -> Unit,
+    onNavigateToPotencia: () -> Unit,
+    onNavigateToForca: () -> Unit,
+    onNavigateToAngulo: () -> Unit,
+    onNavigateToFrequencia: () -> Unit,
+    onNavigateToTorque: () -> Unit,
+    onNavigateToCapacitancia: () -> Unit,
+    onNavigateToCarga_eletrica: () -> Unit,
+    onNavigateToCorrente_Eletrica: () -> Unit,
+    onNavigateToResistencia: () -> Unit,
+    onNavigateToTensao: () -> Unit,
+    onNavigateToDensidade: () -> Unit,
 ) {
     // Lista de opções de conversão (Label e Ação)
     val conversionItems = listOf(
@@ -366,7 +596,19 @@ fun HomeScreen(
         "Temperatura" to onNavigateToTemperatura,
         "Tempo" to onNavigateToTempo,
         "Velocidade" to onNavigateToVelocidade,
-        "Volume" to onNavigateToVolume
+        "Volume" to onNavigateToVolume,
+        "Energia" to onNavigateToEnergia,
+        "Potência" to onNavigateToPotencia,
+        "Força" to onNavigateToForca,
+        "Ângulo" to onNavigateToAngulo,
+        "Frequência" to onNavigateToFrequencia,
+        "Torque" to onNavigateToTorque,
+        "Capacitância" to onNavigateToCapacitancia,
+        "Carga elétrica" to onNavigateToCarga_eletrica,
+        "Corrente" to onNavigateToCorrente_Eletrica,
+        "Resistência" to onNavigateToResistencia,
+        "Tensão" to onNavigateToTensao,
+        "Densidade" to onNavigateToDensidade
     )
 
     // Coluna principal de sustentação do aplicativo
@@ -437,6 +679,18 @@ fun ConversionTypeCard (
                     "Volume" -> painterResource(R.drawable.icon_volume)
                     "Temperatura" -> painterResource(R.drawable.icon_temperature)
                     "Velocidade" -> painterResource(R.drawable.icon_velocidade)
+                    "Energia" -> painterResource(R.drawable.icon_energia)
+                    "Potência" -> painterResource(R.drawable.icon_potencia)
+                    "Força" -> painterResource(R.drawable.icon_forca)
+                    "Ângulo" -> painterResource(R.drawable.icon_angulo)
+                    "Frequência" -> painterResource(R.drawable.icon_frequencia)
+                    "Torque" -> painterResource(R.drawable.icon_torque)
+                    "Capacitância" -> painterResource(R.drawable.icon_capacitor)
+                    "Carga elétrica" -> painterResource(R.drawable.icon_carga_eletrica)
+                    "Corrente" -> painterResource(R.drawable.icon_corrente_eletrica)
+                    "Resistência" -> painterResource(R.drawable.icon_resistencia)
+                    "Tensão" -> painterResource(R.drawable.icon_tensao)
+                    "Densidade" -> painterResource(R.drawable.icon_densidade)
                     else -> painterResource(R.drawable.ic_launcher_background)
                 },
                 contentDescription = null, // O texto já descreve a ação
