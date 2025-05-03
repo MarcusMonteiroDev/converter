@@ -85,6 +85,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.style.TextAlign
+import kotlin.math.PI
 
 //--------------------------------------------------------------------------------------------------
 // Lista das telas do aplicativo
@@ -409,7 +410,6 @@ fun MainApp (modifier: Modifier = Modifier) {
                         "Cavalo boiler",
                         "Pés-libra por minuto",
                         "Pés-libra por segundo",
-                        "dBm (dBm)",
                         "Calorias por hora"
                     ),
                     tipo_conversao = 11
@@ -508,7 +508,23 @@ fun MainApp (modifier: Modifier = Modifier) {
                 UnitScreen(modifier = modifier,
                     onGoBack = { navController.navigateUp() },
                     titulo = "capacitância",
-                    unidades = listOf<String>(),
+                    unidades = listOf<String>(
+                            "Faraday (F)",
+                            "Decafarad (daF)",
+                            "Hectofarad (hF)",
+                            "Quilofarad (kF)",
+                            "Megafarad (MF)",
+                            "Gigafarad (GF)",
+                            "Terafarad (TF)",
+                            "Decifarad (dF)",
+                            "Centifarad (cF)",
+                            "Milifarad (mF)",
+                            "Microfarad (µF)",
+                            "Nanofarad (nF)",
+                            "PicoFarad (pF)",
+                            "Coulomb por volt (C/V)",
+                            "Abfarad (abF)",
+                            ),
                     tipo_conversao = 16)
             }
             // Mapeia a rota carga eletrica para a tela de conversão
@@ -517,7 +533,20 @@ fun MainApp (modifier: Modifier = Modifier) {
                 UnitScreen(modifier = modifier,
                     onGoBack = { navController.navigateUp() },
                     titulo = "carga elétrica",
-                    unidades = listOf<String>(),
+                    unidades = listOf<String>(
+                        "Nanocoulomb (nC)",
+                        "Microcoulomb (µC)",
+                        "Milicoulomb (mC)",
+                        "Coulomb (C)",
+                        "Kilocoulomb (kC)",
+                        "Megacoulomb (MC)",
+                        "Abcoulomb (abC)",
+                        "Miliampere-hora (mAh)",
+                        "Ampere-hora (Ah)",
+                        "Faraday (F)",
+                        "Statcoulomb (statC)",
+                        "Carga elementar (e)"
+                    ),
                     tipo_conversao = 17)
             }
             // Mapeia a rota corrente eletrica para a tela de conversão
@@ -526,7 +555,17 @@ fun MainApp (modifier: Modifier = Modifier) {
                 UnitScreen(modifier = modifier,
                     onGoBack = { navController.navigateUp() },
                     titulo = "corrente elétrica",
-                    unidades = listOf<String>(),
+                    unidades = listOf<String>(
+                        "Nanoampère (nA)",
+                        "Microampère (µA)",
+                        "Miliampère (mA)",
+                        "Ampère (A)",
+                        "Kiloampère (kA)",
+                        "Megaampère (MA)",
+                        "Gigaampère (GA)",
+                        "Abampère (aA)",
+                        "Coulomb por segundo (C/s)"
+                    ),
                     tipo_conversao = 18)
             }
             // Mapeia a rota resistencia para a tela de conversão
@@ -535,7 +574,17 @@ fun MainApp (modifier: Modifier = Modifier) {
                 UnitScreen(modifier = modifier,
                     onGoBack = { navController.navigateUp() },
                     titulo = "resistência",
-                    unidades = listOf<String>(),
+                    unidades = listOf<String>(
+                        "Nanoohm (nΩ)",
+                        "Microohm (µΩ)",
+                        "Miliohm (mΩ)",
+                        "Ohm (Ω)",
+                        "Kiloohm (kΩ)",
+                        "Megaohm (MΩ)",
+                        "Gigaohm (GΩ)",
+                        "Abohm (abΩ)",
+                        "Volt por ampère (V/A)"
+                    ),
                     tipo_conversao = 19)
             }
             // Mapeia a rota resistencia para a tela de tensao
@@ -544,7 +593,18 @@ fun MainApp (modifier: Modifier = Modifier) {
                 UnitScreen(modifier = modifier,
                     onGoBack = { navController.navigateUp() },
                     titulo = "tensão",
-                    unidades = listOf<String>(),
+                    unidades = listOf<String>(
+                        "Nanovolt (nV)",
+                        "Microvolt (µV)",
+                        "Millivolt (mV)",
+                        "Volt (V)",
+                        "Kilovolt (kV)",
+                        "Megavolt (MV)",
+                        "Gigavolt (GV)",
+                        "Watt por ampère (W/A)",
+                        "Abvolt (abV)",
+                        "Statvolt (stV)"
+                    ),
                     tipo_conversao = 20)
             }
             // Mapeia a rota resistencia para a tela de densidade
@@ -553,7 +613,15 @@ fun MainApp (modifier: Modifier = Modifier) {
                 UnitScreen(modifier = modifier,
                     onGoBack = { navController.navigateUp() },
                     titulo = "densidade",
-                    unidades = listOf<String>(),
+                    unidades = listOf<String>(
+                        "Grama por Centímetro Cúbico (g/cm³)",
+                        "Quilograma por metro cúbico (kg/m³)",
+                        "Grama por Metro Cúbico (g/m³)",
+                        "Miligrama por Metro Cúbico (mg/m³)",
+                        "Onça por Galão (oz/gal)",
+                        "Libra por pé cúbico (lb/ft³)",
+                        "Libra por polegada cúbica (lb/in³)"
+                    ),
                     tipo_conversao = 21)
             }
         }

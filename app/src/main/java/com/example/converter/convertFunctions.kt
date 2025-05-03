@@ -1,5 +1,7 @@
 package com.example.converter
 
+import kotlin.math.PI
+
 // Funções de conversão:
 // Conversão Área
 fun convertArea (inputUnidade: String,      // Input do usuário
@@ -435,6 +437,575 @@ fun convertVolume(inputUnidade: String,      // Input do usuário
     // Depois o resultado é convertido para a unidade de saída
     val valorEmL = variavel * unidadesEmL[itemPosition1]
     resultado = (valorEmL / unidadesEmL[itemPosition2]).toString()
+
+    // Retorna o resultado formatado
+    return resultado
+}
+
+// Conversão Energia
+fun convertEnergia (inputUnidade: String,      // Input do usuário
+                    itemPosition1: Int,        // Unidade de entrada (de)
+                    itemPosition2: Int         // Unidade de saída (para)
+): String {
+    /*
+    Lista de unidades disponíveis
+    [0] -> Joule (J)
+    [1] -> Caloria (cal)
+    [2] -> Quilocaloria (kcal / Cal)
+    [3] -> Quilowatt-hora (kWh)
+    [4] -> Elétron-volt (eV)
+    [5] -> BTU (British Thermal Unit)
+    [6] -> Pé-libra (ft-lb)
+    */
+
+    // Resultado da conversão
+    var resultado: String = "0"
+    // Tenta converter o input do usuário para número
+    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+
+    // Lista de unidades convertidas para Joules (J)
+    val unidadesEmJ = listOf(
+        1.0,                       // Joule (J)
+        4.184,                     // Caloria (cal) - termoquímica
+        4184.0,                    // Quilocaloria (kcal / Cal) - termoquímica
+        3_600_000.0,               // Quilowatt-hora (kWh) - 3.6E6
+        1.602176634E-19,           // Elétron-volt (eV) - valor exato CODATA 2018
+        1055.056,                  // BTU (British Thermal Unit) - ISO 31-4
+        1.3558179483314004         // Pé-libra (ft-lb)
+    )
+
+    // Primeiro o input do usuário é convertido para J (Joules)
+    // Depois o resultado é convertido para a unidade de saída
+    val valorEmJ = variavel * unidadesEmJ[itemPosition1]
+    resultado = (valorEmJ / unidadesEmJ[itemPosition2]).toString()
+
+    // Retorna o resultado formatado
+    return resultado
+}
+
+// Conversão Potência
+fun convertPotencia (inputUnidade: String,      // Input do usuário
+                    itemPosition1: Int,        // Unidade de entrada (de)
+                    itemPosition2: Int         // Unidade de saída (para)
+): String {
+    /*
+    Lista de unidades disponíveis (dBm omitido por ser logarítmico)
+    [0] -> Miliwatt
+    [1] -> Watt (W)
+    [2] -> Kilowatt (kW)
+    [3] -> Megawatt (MW)
+    [4] -> Joule por segundo (J/s)
+    [5] -> Horse-power (hp)
+    [6] -> Cavalo-vapor
+    [7] -> Cavalo-de-força elétrico
+    [8] -> Cavalo boiler
+    [9] -> Pés-libra por minuto
+    [10] -> Pés-libra por segundo
+    [11] -> Calorias por hora
+    */
+
+    // Resultado da conversão
+    var resultado: String = "0"
+    // Tenta converter o input do usuário para número
+    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+
+    // Lista de unidades convertidas para Watts (W)
+    // (Fatores de conversão aproximados onde aplicável)
+    val unidadesEmW = listOf(
+        0.001,                     // Miliwatt
+        1.0,                       // Watt (W)
+        1000.0,                    // Kilowatt (kW)
+        1_000_000.0,               // Megawatt (MW)
+        1.0,                       // Joule por segundo (J/s) - é igual a Watt
+        745.6998715822702,         // Horse-power (hp) - mecânico (550 ft⋅lbf/s)
+        735.49875,                 // Cavalo-vapor (CV) - métrico
+        746.0,                     // Cavalo-de-força elétrico
+        9809.5,                    // Cavalo boiler
+        0.0225969658,              // Pés-libra por minuto (ft·lbf/min) -> W (1.3558179 / 60)
+        1.3558179483,              // Pés-libra por segundo (ft·lbf/s) -> W
+        0.001162222                // Calorias por hora (cal/h) -> W (4.184 / 3600) - termoquímica
+    )
+
+    // Primeiro o input do usuário é convertido para W (Watts)
+    // Depois o resultado é convertido para a unidade de saída
+    val valorEmW = variavel * unidadesEmW[itemPosition1]
+    resultado = (valorEmW / unidadesEmW[itemPosition2]).toString()
+
+    // Retorna o resultado formatado
+    return resultado
+}
+
+// Conversão Força
+fun convertForca (inputUnidade: String,      // Input do usuário
+                 itemPosition1: Int,        // Unidade de entrada (de)
+                 itemPosition2: Int         // Unidade de saída (para)
+): String {
+    /*
+    Lista de unidades disponíveis
+    [0] -> Nanonewton (nN)
+    [1] -> Micronewton (µN)
+    [2] -> Mili Newton (mN)
+    [3] -> Newton (N)
+    [4] -> Quilonewton (kN)
+    [5] -> Meganewton (MN)
+    [6] -> Giganewton (GN)
+    [7] -> Dina (dyn)
+    [8] -> Joule por metro (J/m)
+    [9] -> Kilograma Força (kgf)
+    [10] -> Tonelada-força (tnf)
+    */
+
+    // Resultado da conversão
+    var resultado: String = "0"
+    // Tenta converter o input do usuário para número
+    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+
+    // Lista de unidades convertidas para Newtons (N)
+    // (Fator para kgf e tnf usa g ≈ 9.80665 m/s²)
+    val unidadesEmN = listOf(
+        1.0E-9,             // Nanonewton (nN)
+        1.0E-6,             // Micronewton (µN)
+        0.001,              // Mili Newton (mN)
+        1.0,                // Newton (N)
+        1000.0,             // Quilonewton (kN)
+        1_000_000.0,        // Meganewton (MN)
+        1_000_000_000.0,    // Giganewton (GN)
+        0.00001,            // Dina (dyn) - 1.0E-5
+        1.0,                // Joule por metro (J/m) - é igual a Newton
+        9.80665,            // Kilograma Força (kgf) - usando g padrão
+        9806.65             // Tonelada-força (tnf) - 1000 * kgf
+    )
+
+    // Primeiro o input do usuário é convertido para N (Newtons)
+    // Depois o resultado é convertido para a unidade de saída
+    val valorEmN = variavel * unidadesEmN[itemPosition1]
+    resultado = (valorEmN / unidadesEmN[itemPosition2]).toString()
+
+    // Retorna o resultado formatado
+    return resultado
+}
+
+// Conversão Ângulo
+fun convertAngulo (inputUnidade: String,      // Input do usuário
+                 itemPosition1: Int,        // Unidade de entrada (de)
+                 itemPosition2: Int         // Unidade de saída (para)
+): String {
+    /*
+    Lista de unidades disponíveis
+    [0] -> Grau (°)
+    [1] -> Radiano (rad)
+    [2] -> Gradiano (grad)
+    */
+
+    // Resultado da conversão
+    var resultado: String = "0"
+    // Tenta converter o input do usuário para número
+    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+
+    // Lista de unidades convertidas para Graus (°)
+    val unidadesEmGraus = listOf(
+        1.0,             // Grau (°)
+        180.0 / PI,      // Radiano (rad) -> Graus (aprox. 57.2958)
+        0.9              // Gradiano (grad) -> Graus (360/400)
+    )
+
+    // Primeiro o input do usuário é convertido para Graus (°)
+    // Depois o resultado é convertido para a unidade de saída
+    val valorEmGraus = variavel * unidadesEmGraus[itemPosition1]
+    resultado = (valorEmGraus / unidadesEmGraus[itemPosition2]).toString()
+
+    // Retorna o resultado formatado
+    return resultado
+}
+
+// Conversão Frequência
+fun convertFrequencia(inputUnidade: String,      // Input do usuário
+                     itemPosition1: Int,        // Unidade de entrada (de)
+                     itemPosition2: Int         // Unidade de saída (para)
+): String {
+    /*
+    Lista de unidades disponíveis
+    [0] -> Nanohertz (nHz)
+    [1] -> Microhertz (µHz)
+    [2] -> Milihertz (mHz)
+    [3] -> Hertz (Hz)
+    [4] -> Kilohertz (kHz)
+    [5] -> Megahertz (MHz)
+    [6] -> Gigahertz (GHz)
+    [7] -> Terahertz (THz)
+    [8] -> Ciclos por segundo (cps)
+    [9] -> Rotações por minuto (rpm)
+    [10] -> Batidas por minuto (BPM)
+    [11] -> Radianos por segundo (rad/s)
+    [12] -> Radianos por minuto
+    [13] -> Radianos por hora
+    [14] -> Radianos por dia
+    */
+
+    // Resultado da conversão
+    var resultado: String = "0"
+    // Tenta converter o input do usuário para número
+    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+
+    // Lista de unidades convertidas para Hertz (Hz)
+    val unidadesEmHz = listOf(
+        1.0E-9,             // Nanohertz (nHz)
+        1.0E-6,             // Microhertz (µHz)
+        0.001,              // Milihertz (mHz)
+        1.0,                // Hertz (Hz)
+        1000.0,             // Kilohertz (kHz)
+        1_000_000.0,        // Megahertz (MHz)
+        1_000_000_000.0,    // Gigahertz (GHz)
+        1_000_000_000_000.0,// Terahertz (THz)
+        1.0,                // Ciclos por segundo (cps) - é igual a Hz
+        1.0 / 60.0,         // Rotações por minuto (rpm) -> Hz (divide por 60)
+        1.0 / 60.0,         // Batidas por minuto (BPM) -> Hz (divide por 60)
+        1.0 / (2.0 * PI),   // Radianos por segundo (rad/s) -> Hz (divide por 2*PI)
+        1.0 / (2.0 * PI * 60.0), // Radianos por minuto -> Hz
+        1.0 / (2.0 * PI * 3600.0), // Radianos por hora -> Hz
+        1.0 / (2.0 * PI * 86400.0) // Radianos por dia -> Hz
+    )
+
+    // Primeiro o input do usuário é convertido para Hz (Hertz)
+    // Depois o resultado é convertido para a unidade de saída
+    val valorEmHz = variavel * unidadesEmHz[itemPosition1]
+    resultado = (valorEmHz / unidadesEmHz[itemPosition2]).toString()
+
+    // Retorna o resultado formatado
+    return resultado
+}
+
+// Conversão Torque
+fun convertTorque(inputUnidade: String,      // Input do usuário
+                  itemPosition1: Int,        // Unidade de entrada (de)
+                  itemPosition2: Int         // Unidade de saída (para)
+): String {
+    /*
+    Lista de unidades disponíveis
+    [0] -> Newton-metro (N·m)
+    [1] -> Quilonewton-metro (kN·m)
+    [2] -> Milinewton-metro (mN·m)
+    [3] -> Quilograma-força metro (kgf·m)
+    [4] -> Quilograma-força centímetro (kgf·cm)
+    [5] -> Grama-força centímetro (gf·cm)
+    [6] -> Libra-força pé (lbf·ft)
+    [7] -> Libra-força polegada (lbf·in)
+    [8] -> Onça-força polegada (ozf·in)
+    [9] -> Dina-centímetro (dyn·cm)
+    */
+
+    // Resultado da conversão
+    var resultado: String = "0"
+    // Tenta converter o input do usuário para número
+    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+
+    // Lista de unidades convertidas para Newton-metro (N·m)
+    // (Fator para kgf e gf usa g ≈ 9.80665 m/s²)
+    val unidadesEmNm = listOf(
+        1.0,                       // Newton-metro (N·m)
+        1000.0,                    // Quilonewton-metro (kN·m)
+        0.001,                     // Milinewton-metro (mN·m)
+        9.80665,                   // Quilograma-força metro (kgf·m)
+        0.0980665,                 // Quilograma-força centímetro (kgf·cm) -> Nm (9.80665 / 100)
+        0.0000980665,              // Grama-força centímetro (gf·cm) -> Nm (0.0980665 / 1000) ou 9.80665E-5
+        1.3558179483,              // Libra-força pé (lbf·ft) -> Nm
+        0.112984829,               // Libra-força polegada (lbf·in) -> Nm (1.3558179 / 12)
+        0.0070615518,              // Onça-força polegada (ozf·in) -> Nm (0.1129848 / 16)
+        0.0000001                  // Dina-centímetro (dyn·cm) -> Nm (1E-7)
+    )
+
+    // Primeiro o input do usuário é convertido para N·m (Newton-metro)
+    // Depois o resultado é convertido para a unidade de saída
+    val valorEmNm = variavel * unidadesEmNm[itemPosition1]
+    resultado = (valorEmNm / unidadesEmNm[itemPosition2]).toString()
+
+    // Retorna o resultado formatado
+    return resultado
+}
+
+// Conversão Capacitância
+fun convertCapacitancia(inputUnidade: String,      // Input do usuário
+                       itemPosition1: Int,        // Unidade de entrada (de)
+                       itemPosition2: Int         // Unidade de saída (para)
+): String {
+    /*
+    Lista de unidades disponíveis
+    [0] -> Faraday (F)
+    [1] -> Decafarad (daF)
+    [2] -> Hectofarad (hF)
+    [3] -> Quilofarad (kF)
+    [4] -> Megafarad (MF)
+    [5] -> Gigafarad (GF)
+    [6] -> Terafarad (TF)
+    [7] -> Decifarad (dF)
+    [8] -> Centifarad (cF)
+    [9] -> Milifarad (mF)
+    [10] -> Microfarad (µF)
+    [11] -> Nanofarad (nF)
+    [12] -> PicoFarad (pF)
+    [13] -> Coulomb por volt (C/V)
+    [14] -> Abfarad (abF)
+    */
+
+    // Resultado da conversão
+    var resultado: String = "0"
+    // Tenta converter o input do usuário para número
+    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+
+    // Lista de unidades convertidas para Farads (F)
+    val unidadesEmF = listOf(
+        1.0,                // Faraday (F)
+        10.0,               // Decafarad (daF)
+        100.0,              // Hectofarad (hF)
+        1000.0,             // Quilofarad (kF)
+        1.0E6,              // Megafarad (MF)
+        1.0E9,              // Gigafarad (GF)
+        1.0E12,             // Terafarad (TF)
+        0.1,                // Decifarad (dF)
+        0.01,               // Centifarad (cF)
+        0.001,              // Milifarad (mF)
+        1.0E-6,             // Microfarad (µF)
+        1.0E-9,             // Nanofarad (nF)
+        1.0E-12,            // PicoFarad (pF)
+        1.0,                // Coulomb por volt (C/V) - é a definição de Farad
+        1.0E9               // Abfarad (abF) - unidade CGS eletromagnética
+    )
+
+    // Primeiro o input do usuário é convertido para F (Farads)
+    // Depois o resultado é convertido para a unidade de saída
+    val valorEmF = variavel * unidadesEmF[itemPosition1]
+    resultado = (valorEmF / unidadesEmF[itemPosition2]).toString()
+
+    // Retorna o resultado formatado
+    return resultado
+}
+
+// Conversão Carga Elétrica
+fun convertCargaEletrica(inputUnidade: String,      // Input do usuário
+                          itemPosition1: Int,        // Unidade de entrada (de)
+                          itemPosition2: Int         // Unidade de saída (para)
+): String {
+    /*
+    Lista de unidades disponíveis
+    [0] -> Nanocoulomb (nC)
+    [1] -> Microcoulomb (µC)
+    [2] -> Milicoulomb (mC)
+    [3] -> Coulomb (C)
+    [4] -> Kilocoulomb (kC)
+    [5] -> Megacoulomb (MC)
+    [6] -> Abcoulomb (abC)
+    [7] -> Miliampere-hora (mAh)
+    [8] -> Ampere-hora (Ah)
+    [9] -> Faraday (F)
+    [10] -> Statcoulomb (statC)
+    [11] -> Carga elementar (e)
+    */
+
+    // Resultado da conversão
+    var resultado: String = "0"
+    // Tenta converter o input do usuário para número
+    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+
+    // Lista de unidades convertidas para Coulombs (C)
+    // (Fatores exatos ou aproximados CODATA 2018 onde aplicável)
+    val unidadesEmC = listOf(
+        1.0E-9,                     // Nanocoulomb (nC)
+        1.0E-6,                     // Microcoulomb (µC)
+        0.001,                      // Milicoulomb (mC)
+        1.0,                        // Coulomb (C)
+        1000.0,                     // Kilocoulomb (kC)
+        1.0E6,                      // Megacoulomb (MC)
+        10.0,                       // Abcoulomb (abC) - unidade CGS emu
+        3.6,                        // Miliampere-hora (mAh) -> C (0.001 A * 3600 s)
+        3600.0,                     // Ampere-hora (Ah) -> C (1 A * 3600 s)
+        96485.33212331001,          // Faraday (F) - constante, C/mol
+        3.3356409519815205E-10,     // Statcoulomb (statC) ou Franklin (Fr) - unidade CGS esu
+        1.602176634E-19             // Carga elementar (e)
+    )
+
+    // Primeiro o input do usuário é convertido para C (Coulombs)
+    // Depois o resultado é convertido para a unidade de saída
+    val valorEmC = variavel * unidadesEmC[itemPosition1]
+    resultado = (valorEmC / unidadesEmC[itemPosition2]).toString()
+
+    // Retorna o resultado formatado
+    return resultado
+}
+
+// Conversão Corrente Elétrica
+fun convertCorrenteEletrica(inputUnidade: String,      // Input do usuário
+                           itemPosition1: Int,        // Unidade de entrada (de)
+                           itemPosition2: Int         // Unidade de saída (para)
+): String {
+    /*
+    Lista de unidades disponíveis
+    [0] -> Nanoampère (nA)
+    [1] -> Microampère (µA)
+    [2] -> Miliampère (mA)
+    [3] -> Ampère (A)
+    [4] -> Kiloampère (kA)
+    [5] -> Megaampère (MA)
+    [6] -> Gigaampère (GA)
+    [7] -> Abampère (aA)
+    [8] -> Coulomb por segundo (C/s)
+    */
+
+    // Resultado da conversão
+    var resultado: String = "0"
+    // Tenta converter o input do usuário para número
+    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+
+    // Lista de unidades convertidas para Ampères (A)
+    val unidadesEmA = listOf(
+        1.0E-9,             // Nanoampère (nA)
+        1.0E-6,             // Microampère (µA)
+        0.001,              // Miliampère (mA)
+        1.0,                // Ampère (A)
+        1000.0,             // Kiloampère (kA)
+        1.0E6,              // Megaampère (MA)
+        1.0E9,              // Gigaampère (GA)
+        10.0,               // Abampère (aA) - unidade CGS emu
+        1.0                 // Coulomb por segundo (C/s) - é a definição de Ampère
+    )
+
+    // Primeiro o input do usuário é convertido para A (Ampères)
+    // Depois o resultado é convertido para a unidade de saída
+    val valorEmA = variavel * unidadesEmA[itemPosition1]
+    resultado = (valorEmA / unidadesEmA[itemPosition2]).toString()
+
+    // Retorna o resultado formatado
+    return resultado
+}
+
+// Conversão Resistência Elétrica
+fun convertResistence(inputUnidade: String,      // Input do usuário
+                      itemPosition1: Int,        // Unidade de entrada (de)
+                      itemPosition2: Int         // Unidade de saída (para)
+): String {
+    /*
+    Lista de unidades disponíveis
+    [0] -> Nanoohm (nΩ)
+    [1] -> Microohm (µΩ)
+    [2] -> Miliohm (mΩ)
+    [3] -> Ohm (Ω)
+    [4] -> Kiloohm (kΩ)
+    [5] -> Megaohm (MΩ)
+    [6] -> Gigaohm (GΩ)
+    [7] -> Abohm (abΩ)
+    [8] -> Volt por ampère (V/A)
+    */
+
+    // Resultado da conversão
+    var resultado: String = "0"
+    // Tenta converter o input do usuário para número
+    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+
+    // Lista de unidades convertidas para Ohms (Ω)
+    val unidadesEmOhm = listOf(
+        1.0E-9,             // Nanoohm (nΩ)
+        1.0E-6,             // Microohm (µΩ)
+        0.001,              // Miliohm (mΩ)
+        1.0,                // Ohm (Ω)
+        1000.0,             // Kiloohm (kΩ)
+        1.0E6,              // Megaohm (MΩ)
+        1.0E9,              // Gigaohm (GΩ)
+        1.0E-9,             // Abohm (abΩ) - unidade CGS emu
+        1.0                 // Volt por ampère (V/A) - é a definição de Ohm
+    )
+
+    // Primeiro o input do usuário é convertido para Ω (Ohms)
+    // Depois o resultado é convertido para a unidade de saída
+    val valorEmOhm = variavel * unidadesEmOhm[itemPosition1]
+    resultado = (valorEmOhm / unidadesEmOhm[itemPosition2]).toString()
+
+    // Retorna o resultado formatado
+    return resultado
+}
+
+// Conversão Tensão Elétrica (Voltagem)
+fun convertTensao(inputUnidade: String,      // Input do usuário
+                   itemPosition1: Int,        // Unidade de entrada (de)
+                   itemPosition2: Int         // Unidade de saída (para)
+): String {
+    /*
+    Lista de unidades disponíveis
+    [0] -> Nanovolt (nV)
+    [1] -> Microvolt (µV)
+    [2] -> Millivolt (mV)
+    [3] -> Volt (V)
+    [4] -> Kilovolt (kV)
+    [5] -> Megavolt (MV)
+    [6] -> Gigavolt (GV)
+    [7] -> Watt por ampère (W/A)
+    [8] -> Abvolt (abV)
+    [9] -> Statvolt (stV)
+    */
+
+    // Resultado da conversão
+    var resultado: String = "0"
+    // Tenta converter o input do usuário para número
+    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+
+    // Lista de unidades convertidas para Volts (V)
+    val unidadesEmV = listOf(
+        1.0E-9,             // Nanovolt (nV)
+        1.0E-6,             // Microvolt (µV)
+        0.001,              // Millivolt (mV)
+        1.0,                // Volt (V)
+        1000.0,             // Kilovolt (kV)
+        1.0E6,              // Megavolt (MV)
+        1.0E9,              // Gigavolt (GV)
+        1.0,                // Watt por ampère (W/A) - é igual a Volt (V = P/I)
+        1.0E-8,             // Abvolt (abV) - unidade CGS emu
+        299.792458          // Statvolt (stV) - unidade CGS esu (c/10^8, onde c é a vel. da luz em m/s)
+    )
+
+    // Primeiro o input do usuário é convertido para V (Volts)
+    // Depois o resultado é convertido para a unidade de saída
+    val valorEmV = variavel * unidadesEmV[itemPosition1]
+    resultado = (valorEmV / unidadesEmV[itemPosition2]).toString()
+
+    // Retorna o resultado formatado
+    return resultado
+}
+
+// Conversão Densidade
+fun convertDensidade(inputUnidade: String,      // Input do usuário
+                   itemPosition1: Int,        // Unidade de entrada (de)
+                   itemPosition2: Int         // Unidade de saída (para)
+): String {
+    /*
+    Lista de unidades disponíveis
+    [0] -> Grama por Centímetro Cúbico (g/cm³)
+    [1] -> Quilograma por metro cúbico (kg/m³)
+    [2] -> Grama por Metro Cúbico (g/m³)
+    [3] -> Miligrama por Metro Cúbico (mg/m³)
+    [4] -> Onça por Galão (oz/gal)
+    [5] -> Libra por pé cúbico (lb/ft³)
+    [6] -> Libra por polegada cúbica (lb/in³)
+    */
+
+    // Resultado da conversão
+    var resultado: String = "0"
+    // Tenta converter o input do usuário para número
+    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+
+    // Lista de unidades convertidas para Quilograma por metro cúbico (kg/m³)
+    // (Fatores aproximados para unidades imperiais/US)
+    val unidadesEmKgM3 = listOf(
+        1000.0,             // Grama por Centímetro Cúbico (g/cm³) -> kg/m³
+        1.0,                // Quilograma por metro cúbico (kg/m³)
+        0.001,              // Grama por Metro Cúbico (g/m³) -> kg/m³
+        1.0E-6,             // Miligrama por Metro Cúbico (mg/m³) -> kg/m³
+        7.4891517,          // Onça por Galão (oz/gal) -> kg/m³ (usando galão líquido US)
+        16.018463,          // Libra por pé cúbico (lb/ft³) -> kg/m³
+        27679.905           // Libra por polegada cúbica (lb/in³) -> kg/m³
+    )
+
+    // Primeiro o input do usuário é convertido para kg/m³
+    // Depois o resultado é convertido para a unidade de saída
+    val valorEmKgM3 = variavel * unidadesEmKgM3[itemPosition1]
+    resultado = (valorEmKgM3 / unidadesEmKgM3[itemPosition2]).toString()
 
     // Retorna o resultado formatado
     return resultado
