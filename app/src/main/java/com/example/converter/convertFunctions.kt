@@ -1,7 +1,22 @@
 package com.example.converter
 
 import kotlin.math.PI
+import java.util.Locale
 
+// Funções ultilitárias
+// Formatação da string do resultado
+fun formatarResultado (resultado: String): String {
+    val numero = resultado.toDouble()
+
+    if (numero >= 1.0e7) {
+        return String.format(Locale("pt","BR"), "%.2E", numero)
+    }
+    if (numero < 0.001 && numero != 0.0) {
+        return String.format(Locale("pt","BR"), "%.2E", numero)
+    }
+    return numero.toString()
+}
+//--------------------------------------------------------------------------------------------------
 // Funções de conversão:
 // Conversão Área
 fun convertArea (inputUnidade: String,      // Input do usuário
@@ -47,7 +62,7 @@ fun convertArea (inputUnidade: String,      // Input do usuário
     resultado = (valorEmM2 / unidadesEmM2[itemPosition2]).toString()
 
     // Retorna o resultado formatado
-    return resultado
+    return formatarResultado(resultado)
 }
 
 // Conversão comprimento
@@ -104,7 +119,7 @@ fun convertComprimento(inputUnidade: String,      // Input do usuário
     resultado = (valorEmM / unidadesEmM[itemPosition2]).toString()
 
     // Retorna o resultado formatado
-    return resultado
+    return formatarResultado(resultado)
 }
 
 // Conversão de dados digitais
@@ -146,7 +161,7 @@ fun convertDados(inputUnidade: String,      // Input do usuário
     resultado = (valorEmMB / unidadesEmMB[itemPosition2]).toString()
 
     // Retorna o resultado formatado
-    return resultado
+    return formatarResultado(resultado)
 }
 
 // Conversão de massa
@@ -200,7 +215,7 @@ fun convertMassa(inputUnidade: String,      // Input do usuário
     resultado = (valorEmKg / unidadesEmKg[itemPosition2]).toString()
 
     // Retorna o resultado formatado
-    return resultado
+    return formatarResultado(resultado)
 }
 
 // Conversão pressão
@@ -247,7 +262,7 @@ fun convertPressao(inputUnidade: String,      // Input do usuário
     resultado = (valorEmPa / unidadesEmPa[itemPosition2]).toString()
 
     // Retorna o resultado formatado
-    return resultado
+    return formatarResultado(resultado)
 }
 
 // Conversão temperatura
@@ -288,7 +303,7 @@ fun convertTemperatura(inputUnidade: String,      // Input do usuário
     resultado = valorFinal.toString()
 
     // Retorna o resultado formatado
-    return resultado
+    return formatarResultado(resultado)
 }
 
 // Conversão tempo
@@ -339,7 +354,7 @@ fun convertTempo(inputUnidade: String,      // Input do usuário
     resultado = (valorEmS / unidadesEmS[itemPosition2]).toString()
 
     // Retorna o resultado formatado
-    return resultado
+    return formatarResultado(resultado)
 }
 
 // Conversão velocidade
@@ -380,7 +395,7 @@ fun convertVelocidade(inputUnidade: String,      // Input do usuário
     resultado = (valorEmMs / unidadesEmMs[itemPosition2]).toString()
 
     // Retorna o resultado formatado
-    return resultado
+    return formatarResultado(resultado)
 }
 
 // Conversão volume
@@ -439,7 +454,7 @@ fun convertVolume(inputUnidade: String,      // Input do usuário
     resultado = (valorEmL / unidadesEmL[itemPosition2]).toString()
 
     // Retorna o resultado formatado
-    return resultado
+    return formatarResultado(resultado)
 }
 
 // Conversão Energia
@@ -480,7 +495,7 @@ fun convertEnergia (inputUnidade: String,      // Input do usuário
     resultado = (valorEmJ / unidadesEmJ[itemPosition2]).toString()
 
     // Retorna o resultado formatado
-    return resultado
+    return formatarResultado(resultado)
 }
 
 // Conversão Potência
@@ -532,7 +547,7 @@ fun convertPotencia (inputUnidade: String,      // Input do usuário
     resultado = (valorEmW / unidadesEmW[itemPosition2]).toString()
 
     // Retorna o resultado formatado
-    return resultado
+    return formatarResultado(resultado)
 }
 
 // Conversão Força
@@ -582,7 +597,7 @@ fun convertForca (inputUnidade: String,      // Input do usuário
     resultado = (valorEmN / unidadesEmN[itemPosition2]).toString()
 
     // Retorna o resultado formatado
-    return resultado
+    return formatarResultado(resultado)
 }
 
 // Conversão Ângulo
@@ -615,7 +630,7 @@ fun convertAngulo (inputUnidade: String,      // Input do usuário
     resultado = (valorEmGraus / unidadesEmGraus[itemPosition2]).toString()
 
     // Retorna o resultado formatado
-    return resultado
+    return formatarResultado(resultado)
 }
 
 // Conversão Frequência
@@ -672,7 +687,7 @@ fun convertFrequencia(inputUnidade: String,      // Input do usuário
     resultado = (valorEmHz / unidadesEmHz[itemPosition2]).toString()
 
     // Retorna o resultado formatado
-    return resultado
+    return formatarResultado(resultado)
 }
 
 // Conversão Torque
@@ -720,7 +735,7 @@ fun convertTorque(inputUnidade: String,      // Input do usuário
     resultado = (valorEmNm / unidadesEmNm[itemPosition2]).toString()
 
     // Retorna o resultado formatado
-    return resultado
+    return formatarResultado(resultado)
 }
 
 // Conversão Capacitância
@@ -777,7 +792,7 @@ fun convertCapacitancia(inputUnidade: String,      // Input do usuário
     resultado = (valorEmF / unidadesEmF[itemPosition2]).toString()
 
     // Retorna o resultado formatado
-    return resultado
+    return formatarResultado(resultado)
 }
 
 // Conversão Carga Elétrica
@@ -829,7 +844,7 @@ fun convertCargaEletrica(inputUnidade: String,      // Input do usuário
     resultado = (valorEmC / unidadesEmC[itemPosition2]).toString()
 
     // Retorna o resultado formatado
-    return resultado
+    return formatarResultado(resultado)
 }
 
 // Conversão Corrente Elétrica
@@ -874,7 +889,7 @@ fun convertCorrenteEletrica(inputUnidade: String,      // Input do usuário
     resultado = (valorEmA / unidadesEmA[itemPosition2]).toString()
 
     // Retorna o resultado formatado
-    return resultado
+    return formatarResultado(resultado)
 }
 
 // Conversão Resistência Elétrica
@@ -919,7 +934,7 @@ fun convertResistence(inputUnidade: String,      // Input do usuário
     resultado = (valorEmOhm / unidadesEmOhm[itemPosition2]).toString()
 
     // Retorna o resultado formatado
-    return resultado
+    return formatarResultado(resultado)
 }
 
 // Conversão Tensão Elétrica (Voltagem)
@@ -966,7 +981,7 @@ fun convertTensao(inputUnidade: String,      // Input do usuário
     resultado = (valorEmV / unidadesEmV[itemPosition2]).toString()
 
     // Retorna o resultado formatado
-    return resultado
+    return formatarResultado(resultado)
 }
 
 // Conversão Densidade
@@ -1008,5 +1023,5 @@ fun convertDensidade(inputUnidade: String,      // Input do usuário
     resultado = (valorEmKgM3 / unidadesEmKgM3[itemPosition2]).toString()
 
     // Retorna o resultado formatado
-    return resultado
+    return formatarResultado(resultado)
 }
