@@ -115,7 +115,9 @@ fun UnitScreen(
     onGoBack: () -> Unit,                       // Função de retorno à tela anterior
     unidades: List<String>,                     // Lista de unidades de medida disponíveis
     titulo: String,                             // Título da tela
-    tipo_conversao: Int
+    convertUnit: (inputUnidade: String,
+                  itemPosition1: Int,
+                  itemPosition2: Int) -> String   // Função de conversão
 ) {
     // Registra o input do usuário
     var inputUnidade by remember { mutableStateOf("") }
@@ -210,89 +212,16 @@ fun UnitScreen(
                     // Espaçamento
                     Spacer(modifier = Modifier.height(8.dp)) // Espaço entre o rótulo e o valor
                     // Resultado da conversão
-                    when (tipo_conversao) {
-                        // Conversão de área
-                        1 -> {Text(
-                            text = convertArea(
-                                inputUnidade = inputUnidade,
-                                itemPosition1 = itemPosition1.value,
-                                itemPosition2 = itemPosition2.value),
-                            style = MaterialTheme.typography.displaySmall,
-                            color = MaterialTheme.colorScheme.primary
-                        )}
-                        // Conversão de comprimento
-                        2 -> {Text(
-                            text = convertComprimento(
-                                inputUnidade = inputUnidade,
-                                itemPosition1 = itemPosition1.value,
-                                itemPosition2 = itemPosition2.value),
-                            style = MaterialTheme.typography.displaySmall,
-                            color = MaterialTheme.colorScheme.primary
-                        )}
-                        // Conversão de dados
-                        3 -> {Text(
-                            text = convertDados(
-                                inputUnidade = inputUnidade,
-                                itemPosition1 = itemPosition1.value,
-                                itemPosition2 = itemPosition2.value),
-                            style = MaterialTheme.typography.displaySmall,
-                            color = MaterialTheme.colorScheme.primary
-                        )}
-                        // Conversão de massa
-                        4 -> {Text(
-                            text = convertMassa(
-                                inputUnidade = inputUnidade,
-                                itemPosition1 = itemPosition1.value,
-                                itemPosition2 = itemPosition2.value),
-                            style = MaterialTheme.typography.displaySmall,
-                            color = MaterialTheme.colorScheme.primary
-                        )}
-                        // Conversão de pressão
-                        5 -> {Text(
-                            text = convertPressao(
-                                inputUnidade = inputUnidade,
-                                itemPosition1 = itemPosition1.value,
-                                itemPosition2 = itemPosition2.value),
-                            style = MaterialTheme.typography.displaySmall,
-                            color = MaterialTheme.colorScheme.primary
-                        )}
-                        // Conversão de temperatura
-                        6 -> {Text(
-                            text = convertTemperatura(
-                                inputUnidade = inputUnidade,
-                                itemPosition1 = itemPosition1.value,
-                                itemPosition2 = itemPosition2.value),
-                            style = MaterialTheme.typography.displaySmall,
-                            color = MaterialTheme.colorScheme.primary
-                        )}
-                        // Conversão de tempo
-                        7 -> {Text(
-                            text = convertTempo(
-                                inputUnidade = inputUnidade,
-                                itemPosition1 = itemPosition1.value,
-                                itemPosition2 = itemPosition2.value),
-                            style = MaterialTheme.typography.displaySmall,
-                            color = MaterialTheme.colorScheme.primary
-                        )}
-                        // Conversão de velocidade
-                        8 -> {Text(
-                            text = convertVelocidade(
-                                inputUnidade = inputUnidade,
-                                itemPosition1 = itemPosition1.value,
-                                itemPosition2 = itemPosition2.value),
-                            style = MaterialTheme.typography.displaySmall,
-                            color = MaterialTheme.colorScheme.primary
-                        )}
-                        // Conversão de volume
-                        9 -> {Text(
-                            text = convertVolume(
-                                inputUnidade = inputUnidade,
-                                itemPosition1 = itemPosition1.value,
-                                itemPosition2 = itemPosition2.value),
-                            style = MaterialTheme.typography.displaySmall,
-                            color = MaterialTheme.colorScheme.primary
-                        )}
-                    }
+                    Text(
+                        text = convertUnit( // Chama a função recebida
+                            inputUnidade,
+                            itemPosition1.value,
+                            itemPosition2.value
+                        ),
+                        style = MaterialTheme.typography.displaySmall,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+
                 }
             }
         }

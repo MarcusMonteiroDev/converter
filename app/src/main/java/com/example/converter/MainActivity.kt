@@ -190,7 +190,7 @@ fun MainApp (modifier: Modifier = Modifier) {
                         "Micrômetro quadrado (µm²)",
                         "Nanômetro quadrado (nm²)"
                     ),
-                    tipo_conversao = 1
+                    convertUnit = ::convertArea,
                 )
             }
             // Mapeia a rota Comprimento para a tela de conversão
@@ -216,7 +216,7 @@ fun MainApp (modifier: Modifier = Modifier) {
                         "Barra (rod)",
                         "Jarda (yd)"
                     ),
-                    tipo_conversao = 2
+                    convertUnit = ::convertComprimento
                 )
             }
             // Mapeia a rota Dados para a tela de conversão
@@ -236,7 +236,7 @@ fun MainApp (modifier: Modifier = Modifier) {
                         "Petabyte (PB)",
                         "Exabyte (EB)"
                     ),
-                    tipo_conversao = 3
+                    convertUnit = ::convertDados
                 )
             }
             // Mapeia a rota Massa para a tela de conversão
@@ -261,7 +261,7 @@ fun MainApp (modifier: Modifier = Modifier) {
                         "Unidade de massa de átomo (u)",
                         "Libra (lb)"
                     ),
-                    tipo_conversao = 4
+                    convertUnit = ::convertMassa
                 )
             }
             // Mapeia a rota Pressao para a tela de conversão
@@ -283,7 +283,7 @@ fun MainApp (modifier: Modifier = Modifier) {
                         "Quilograma-força por centímetro quadrado (kgf/cm²)",
                         "Atmosfera técnica (at)"
                     ),
-                    tipo_conversao = 5
+                    convertUnit = ::convertPressao
                 )
             }
             // Mapeia a rota Temperatura para a tela de conversão
@@ -298,7 +298,7 @@ fun MainApp (modifier: Modifier = Modifier) {
                         "Fahrenheit (°F)",
                         "Kelvin (K)"
                     ),
-                    tipo_conversao = 6
+                    convertUnit = ::convertTemperatura
                 )
             }
             // Mapeia a rota Tempo para a tela de conversão
@@ -322,7 +322,7 @@ fun MainApp (modifier: Modifier = Modifier) {
                         "Década",
                         "Século"
                     ),
-                    tipo_conversao = 7
+                    convertUnit = ::convertTempo
                 )
             }
             // Mapeia a rota Velocidade para a tela de conversão
@@ -341,7 +341,7 @@ fun MainApp (modifier: Modifier = Modifier) {
                         "Velocidade da luz no vácuo (c)",
                         "Mach"
                     ),
-                    tipo_conversao = 8
+                    convertUnit = ::convertVelocidade
                 )
             }
             // Mapeia a rota Volume para a tela de conversão
@@ -369,7 +369,7 @@ fun MainApp (modifier: Modifier = Modifier) {
                         "Colher de sopa (US tbsp - approx 14.8 mL)",
                         "Colher de chá (US tsp - approx 4.9 mL)"
                     ),
-                    tipo_conversao = 9
+                    convertUnit = ::convertVolume
                 )
             }
             // Mapeia a rota Energia para a tela de conversão
@@ -388,7 +388,7 @@ fun MainApp (modifier: Modifier = Modifier) {
                         "BTU (British Thermal Unit)",
                         "Pé-libra (ft-lb)"
                     ),
-                    tipo_conversao = 10
+                    convertUnit = ::convertEnergia
                 )
             }
             // Mapeia a rota Potencia para a tela de conversão
@@ -412,7 +412,7 @@ fun MainApp (modifier: Modifier = Modifier) {
                         "Pés-libra por segundo",
                         "Calorias por hora"
                     ),
-                    tipo_conversao = 11
+                    convertUnit = ::convertPotencia
                 )
             }
             // Mapeia a rota Forca para a tela de conversão
@@ -435,7 +435,7 @@ fun MainApp (modifier: Modifier = Modifier) {
                         "Kilograma Força (kgf)",
                         "Tonelada-força (tnf)"
                     ),
-                    tipo_conversao = 12
+                    convertUnit = ::convertForca
                 )
             }
             // Mapeia a rota Angulo para a tela de conversão
@@ -450,7 +450,7 @@ fun MainApp (modifier: Modifier = Modifier) {
                         "Radiano (rad)",
                         "Gradiano (grad)"
                     ),
-                    tipo_conversao = 13
+                    convertUnit = ::convertAngulo
                 )
             }
             // Mapeia a rota Frequencia para a tela de conversão
@@ -477,7 +477,7 @@ fun MainApp (modifier: Modifier = Modifier) {
                         "Radianos por hora",
                         "Radianos por dia"
                     ),
-                    tipo_conversao = 14
+                    convertUnit = ::convertFrequencia
                 )
             }
             // Mapeia a rota Torque para a tela de conversão
@@ -499,7 +499,7 @@ fun MainApp (modifier: Modifier = Modifier) {
                         "Onça-força polegada (ozf·in)",
                         "Dina-centímetro (dyn·cm)"
                     ),
-                    tipo_conversao = 15
+                    convertUnit = ::convertTorque
                 )
             }
             // Mapeia a rota Capacitancia para a tela de conversão
@@ -525,7 +525,7 @@ fun MainApp (modifier: Modifier = Modifier) {
                             "Coulomb por volt (C/V)",
                             "Abfarad (abF)",
                             ),
-                    tipo_conversao = 16)
+                    convertUnit = ::convertCapacitancia)
             }
             // Mapeia a rota carga eletrica para a tela de conversão
             composable(route = Screen.Carga_eletrica.name) {
@@ -547,7 +547,7 @@ fun MainApp (modifier: Modifier = Modifier) {
                         "Statcoulomb (statC)",
                         "Carga elementar (e)"
                     ),
-                    tipo_conversao = 17)
+                    convertUnit = ::convertCargaEletrica)
             }
             // Mapeia a rota corrente eletrica para a tela de conversão
             composable(route = Screen.Corrente_Eletrica.name) {
@@ -566,7 +566,7 @@ fun MainApp (modifier: Modifier = Modifier) {
                         "Abampère (aA)",
                         "Coulomb por segundo (C/s)"
                     ),
-                    tipo_conversao = 18)
+                    convertUnit = ::convertCorrenteEletrica)
             }
             // Mapeia a rota resistencia para a tela de conversão
             composable(route = Screen.Resistencia.name) {
@@ -585,7 +585,7 @@ fun MainApp (modifier: Modifier = Modifier) {
                         "Abohm (abΩ)",
                         "Volt por ampère (V/A)"
                     ),
-                    tipo_conversao = 19)
+                    convertUnit = ::convertResistence)
             }
             // Mapeia a rota resistencia para a tela de tensao
             composable(route = Screen.Tensao.name) {
@@ -605,7 +605,7 @@ fun MainApp (modifier: Modifier = Modifier) {
                         "Abvolt (abV)",
                         "Statvolt (stV)"
                     ),
-                    tipo_conversao = 20)
+                    convertUnit = ::convertTensao)
             }
             // Mapeia a rota resistencia para a tela de densidade
             composable(route = Screen.Densidade.name) {
@@ -622,7 +622,7 @@ fun MainApp (modifier: Modifier = Modifier) {
                         "Libra por pé cúbico (lb/ft³)",
                         "Libra por polegada cúbica (lb/in³)"
                     ),
-                    tipo_conversao = 21)
+                    convertUnit = ::convertDensidade)
             }
         }
     }
