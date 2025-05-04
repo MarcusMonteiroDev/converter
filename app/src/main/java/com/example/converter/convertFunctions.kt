@@ -38,9 +38,12 @@ fun convertArea (inputUnidade: String,      // Input do usuário
 
     // Resultado da conversão
     var resultado: String = "0"
-    // Variável usada no cpalculo. Tenta converter o input do usuário para um número
+
+    // Variável usada no cálculo. Tenta converter o input do usuário para um número
     // caso não consiga, retorna 0
-    var variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+    // Também substitui a vírgula por ponto para evitar erros de conversão
+    val textoParaParse = inputUnidade.replace(',', '.')
+    var variavel: Double = textoParaParse.toDoubleOrNull() ?: 0.0
 
     // Lista de unidades de medida em m²
     val unidadesEmM2 = listOf(
@@ -90,9 +93,11 @@ fun convertComprimento(inputUnidade: String,      // Input do usuário
 
     // Resultado da conversão
     var resultado: String = "0"
-    // Variável usada no cpalculo. Tenta converter o input do usuário para um número
+    // Variável usada no cálculo. Tenta converter o input do usuário para um número
     // caso não consiga, retorna 0
-    var variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+    // Também substitui a vírgula por ponto para evitar erros de conversão
+    val textoParaParse = inputUnidade.replace(',', '.')
+    var variavel: Double = textoParaParse.toDoubleOrNull() ?: 0.0
 
     // Lista de unidades de medida em m
     val unidadesEmM = listOf(
@@ -141,8 +146,11 @@ fun convertDados(inputUnidade: String,      // Input do usuário
 
     // Resultado da conversão
     var resultado: String = "0"
-    // Tenta converter o input do usuário para número
-    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+    // Variável usada no cálculo. Tenta converter o input do usuário para um número
+    // caso não consiga, retorna 0
+    // Também substitui a vírgula por ponto para evitar erros de conversão
+    val textoParaParse = inputUnidade.replace(',', '.')
+    var variavel: Double = textoParaParse.toDoubleOrNull() ?: 0.0
 
     // Lista de unidades convertidas para megabytes (MB)
     val unidadesEmMB = listOf(
@@ -188,8 +196,11 @@ fun convertMassa(inputUnidade: String,      // Input do usuário
 
     // Resultado da conversão
     var resultado: String = "0"
-    // Tenta converter o input do usuário para número
-    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+    // Variável usada no cálculo. Tenta converter o input do usuário para um número
+    // caso não consiga, retorna 0
+    // Também substitui a vírgula por ponto para evitar erros de conversão
+    val textoParaParse = inputUnidade.replace(',', '.')
+    var variavel: Double = textoParaParse.toDoubleOrNull() ?: 0.0
 
     // Lista de unidades convertidas para quilogramas (kg)
     val unidadesEmKg = listOf(
@@ -239,8 +250,11 @@ fun convertPressao(inputUnidade: String,      // Input do usuário
 
     // Resultado da conversão
     var resultado: String = "0"
-    // Tenta converter o input do usuário para número
-    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+    // Variável usada no cálculo. Tenta converter o input do usuário para um número
+    // caso não consiga, retorna 0
+    // Também substitui a vírgula por ponto para evitar erros de conversão
+    val textoParaParse = inputUnidade.replace(',', '.')
+    var variavel: Double = textoParaParse.toDoubleOrNull() ?: 0.0
 
     // Lista de unidades convertidas para Pascal (Pa)
     val unidadesEmPa = listOf(
@@ -279,8 +293,11 @@ fun convertTemperatura(inputUnidade: String,      // Input do usuário
 
     // Resultado da conversão
     var resultado: String = "0"
-    // Tenta converter o input do usuário para número
-    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+    // Variável usada no cálculo. Tenta converter o input do usuário para um número
+    // caso não consiga, retorna 0
+    // Também substitui a vírgula por ponto para evitar erros de conversão
+    val textoParaParse = inputUnidade.replace(',', '.')
+    var variavel: Double = textoParaParse.toDoubleOrNull() ?: 0.0
 
     // Tratamento especial para temperatura devido às fórmulas não lineares
     var valorEmCelsius: Double = 0.0
@@ -329,8 +346,11 @@ fun convertTempo(inputUnidade: String,      // Input do usuário
 
     // Resultado da conversão
     var resultado: String = "0"
-    // Tenta converter o input do usuário para número
-    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+    // Variável usada no cálculo. Tenta converter o input do usuário para um número
+    // caso não consiga, retorna 0
+    // Também substitui a vírgula por ponto para evitar erros de conversão
+    val textoParaParse = inputUnidade.replace(',', '.')
+    var variavel: Double = textoParaParse.toDoubleOrNull() ?: 0.0
 
     // Lista de unidades convertidas para Segundos (s)
     val unidadesEmS = listOf(
@@ -375,8 +395,11 @@ fun convertVelocidade(inputUnidade: String,      // Input do usuário
 
     // Resultado da conversão
     var resultado: String = "0"
-    // Tenta converter o input do usuário para número
-    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+    // Variável usada no cálculo. Tenta converter o input do usuário para um número
+    // caso não consiga, retorna 0
+    // Também substitui a vírgula por ponto para evitar erros de conversão
+    val textoParaParse = inputUnidade.replace(',', '.')
+    var variavel: Double = textoParaParse.toDoubleOrNull() ?: 0.0
 
     // Lista de unidades convertidas para Metros por segundo (m/s)
     val unidadesEmMs = listOf(
@@ -425,8 +448,11 @@ fun convertVolume(inputUnidade: String,      // Input do usuário
 
     // Resultado da conversão
     var resultado: String = "0"
-    // Tenta converter o input do usuário para número
-    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+    // Variável usada no cálculo. Tenta converter o input do usuário para um número
+    // caso não consiga, retorna 0
+    // Também substitui a vírgula por ponto para evitar erros de conversão
+    val textoParaParse = inputUnidade.replace(',', '.')
+    var variavel: Double = textoParaParse.toDoubleOrNull() ?: 0.0
 
     // Lista de unidades convertidas para Litros (L)
     val unidadesEmL = listOf(
@@ -475,8 +501,11 @@ fun convertEnergia (inputUnidade: String,      // Input do usuário
 
     // Resultado da conversão
     var resultado: String = "0"
-    // Tenta converter o input do usuário para número
-    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+    // Variável usada no cálculo. Tenta converter o input do usuário para um número
+    // caso não consiga, retorna 0
+    // Também substitui a vírgula por ponto para evitar erros de conversão
+    val textoParaParse = inputUnidade.replace(',', '.')
+    var variavel: Double = textoParaParse.toDoubleOrNull() ?: 0.0
 
     // Lista de unidades convertidas para Joules (J)
     val unidadesEmJ = listOf(
@@ -521,8 +550,11 @@ fun convertPotencia (inputUnidade: String,      // Input do usuário
 
     // Resultado da conversão
     var resultado: String = "0"
-    // Tenta converter o input do usuário para número
-    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+    // Variável usada no cálculo. Tenta converter o input do usuário para um número
+    // caso não consiga, retorna 0
+    // Também substitui a vírgula por ponto para evitar erros de conversão
+    val textoParaParse = inputUnidade.replace(',', '.')
+    var variavel: Double = textoParaParse.toDoubleOrNull() ?: 0.0
 
     // Lista de unidades convertidas para Watts (W)
     // (Fatores de conversão aproximados onde aplicável)
@@ -572,8 +604,11 @@ fun convertForca (inputUnidade: String,      // Input do usuário
 
     // Resultado da conversão
     var resultado: String = "0"
-    // Tenta converter o input do usuário para número
-    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+    // Variável usada no cálculo. Tenta converter o input do usuário para um número
+    // caso não consiga, retorna 0
+    // Também substitui a vírgula por ponto para evitar erros de conversão
+    val textoParaParse = inputUnidade.replace(',', '.')
+    var variavel: Double = textoParaParse.toDoubleOrNull() ?: 0.0
 
     // Lista de unidades convertidas para Newtons (N)
     // (Fator para kgf e tnf usa g ≈ 9.80665 m/s²)
@@ -614,8 +649,11 @@ fun convertAngulo (inputUnidade: String,      // Input do usuário
 
     // Resultado da conversão
     var resultado: String = "0"
-    // Tenta converter o input do usuário para número
-    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+    // Variável usada no cálculo. Tenta converter o input do usuário para um número
+    // caso não consiga, retorna 0
+    // Também substitui a vírgula por ponto para evitar erros de conversão
+    val textoParaParse = inputUnidade.replace(',', '.')
+    var variavel: Double = textoParaParse.toDoubleOrNull() ?: 0.0
 
     // Lista de unidades convertidas para Graus (°)
     val unidadesEmGraus = listOf(
@@ -659,8 +697,11 @@ fun convertFrequencia(inputUnidade: String,      // Input do usuário
 
     // Resultado da conversão
     var resultado: String = "0"
-    // Tenta converter o input do usuário para número
-    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+    // Variável usada no cálculo. Tenta converter o input do usuário para um número
+    // caso não consiga, retorna 0
+    // Também substitui a vírgula por ponto para evitar erros de conversão
+    val textoParaParse = inputUnidade.replace(',', '.')
+    var variavel: Double = textoParaParse.toDoubleOrNull() ?: 0.0
 
     // Lista de unidades convertidas para Hertz (Hz)
     val unidadesEmHz = listOf(
@@ -711,8 +752,11 @@ fun convertTorque(inputUnidade: String,      // Input do usuário
 
     // Resultado da conversão
     var resultado: String = "0"
-    // Tenta converter o input do usuário para número
-    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+    // Variável usada no cálculo. Tenta converter o input do usuário para um número
+    // caso não consiga, retorna 0
+    // Também substitui a vírgula por ponto para evitar erros de conversão
+    val textoParaParse = inputUnidade.replace(',', '.')
+    var variavel: Double = textoParaParse.toDoubleOrNull() ?: 0.0
 
     // Lista de unidades convertidas para Newton-metro (N·m)
     // (Fator para kgf e gf usa g ≈ 9.80665 m/s²)
@@ -764,8 +808,11 @@ fun convertCapacitancia(inputUnidade: String,      // Input do usuário
 
     // Resultado da conversão
     var resultado: String = "0"
-    // Tenta converter o input do usuário para número
-    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+    // Variável usada no cálculo. Tenta converter o input do usuário para um número
+    // caso não consiga, retorna 0
+    // Também substitui a vírgula por ponto para evitar erros de conversão
+    val textoParaParse = inputUnidade.replace(',', '.')
+    var variavel: Double = textoParaParse.toDoubleOrNull() ?: 0.0
 
     // Lista de unidades convertidas para Farads (F)
     val unidadesEmF = listOf(
@@ -818,8 +865,11 @@ fun convertCargaEletrica(inputUnidade: String,      // Input do usuário
 
     // Resultado da conversão
     var resultado: String = "0"
-    // Tenta converter o input do usuário para número
-    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+    // Variável usada no cálculo. Tenta converter o input do usuário para um número
+    // caso não consiga, retorna 0
+    // Também substitui a vírgula por ponto para evitar erros de conversão
+    val textoParaParse = inputUnidade.replace(',', '.')
+    var variavel: Double = textoParaParse.toDoubleOrNull() ?: 0.0
 
     // Lista de unidades convertidas para Coulombs (C)
     // (Fatores exatos ou aproximados CODATA 2018 onde aplicável)
@@ -867,8 +917,11 @@ fun convertCorrenteEletrica(inputUnidade: String,      // Input do usuário
 
     // Resultado da conversão
     var resultado: String = "0"
-    // Tenta converter o input do usuário para número
-    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+    // Variável usada no cálculo. Tenta converter o input do usuário para um número
+    // caso não consiga, retorna 0
+    // Também substitui a vírgula por ponto para evitar erros de conversão
+    val textoParaParse = inputUnidade.replace(',', '.')
+    var variavel: Double = textoParaParse.toDoubleOrNull() ?: 0.0
 
     // Lista de unidades convertidas para Ampères (A)
     val unidadesEmA = listOf(
@@ -912,8 +965,11 @@ fun convertResistence(inputUnidade: String,      // Input do usuário
 
     // Resultado da conversão
     var resultado: String = "0"
-    // Tenta converter o input do usuário para número
-    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+    // Variável usada no cálculo. Tenta converter o input do usuário para um número
+    // caso não consiga, retorna 0
+    // Também substitui a vírgula por ponto para evitar erros de conversão
+    val textoParaParse = inputUnidade.replace(',', '.')
+    var variavel: Double = textoParaParse.toDoubleOrNull() ?: 0.0
 
     // Lista de unidades convertidas para Ohms (Ω)
     val unidadesEmOhm = listOf(
@@ -958,8 +1014,11 @@ fun convertTensao(inputUnidade: String,      // Input do usuário
 
     // Resultado da conversão
     var resultado: String = "0"
-    // Tenta converter o input do usuário para número
-    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+    // Variável usada no cálculo. Tenta converter o input do usuário para um número
+    // caso não consiga, retorna 0
+    // Também substitui a vírgula por ponto para evitar erros de conversão
+    val textoParaParse = inputUnidade.replace(',', '.')
+    var variavel: Double = textoParaParse.toDoubleOrNull() ?: 0.0
 
     // Lista de unidades convertidas para Volts (V)
     val unidadesEmV = listOf(
@@ -1002,8 +1061,11 @@ fun convertDensidade(inputUnidade: String,      // Input do usuário
 
     // Resultado da conversão
     var resultado: String = "0"
-    // Tenta converter o input do usuário para número
-    val variavel: Double = inputUnidade.toDoubleOrNull() ?: 0.0
+    // Variável usada no cálculo. Tenta converter o input do usuário para um número
+    // caso não consiga, retorna 0
+    // Também substitui a vírgula por ponto para evitar erros de conversão
+    val textoParaParse = inputUnidade.replace(',', '.')
+    var variavel: Double = textoParaParse.toDoubleOrNull() ?: 0.0
 
     // Lista de unidades convertidas para Quilograma por metro cúbico (kg/m³)
     // (Fatores aproximados para unidades imperiais/US)
