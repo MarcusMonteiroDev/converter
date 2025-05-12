@@ -18,9 +18,9 @@ Cansado de procurar conversores online ou fazer cálculos complexos manualmente?
 
 ## Screenshots
 
-<img src="screenshots/shot1.png" alt="Tela principal do Conversor de Unidades" width="450">
-<br> <img src="screenshots/shot2.png" alt="Tela de conversão do Conversor de Unidades" width="450">
-
+<img src="screenshots/shot1.png" alt="Tela principal do Conversor de Unidades" width="300">
+<br>
+<img src="screenshots/shot2.png" alt="Tela de conversão do Conversor de Unidades" width="300">
 ## Categorias de Conversão Incluídas:
 
 - Área (metro quadrado, hectare, pé quadrado, etc.)
