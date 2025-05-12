@@ -4,6 +4,8 @@ Bem-vindo ao Conversor de Unidades – a ferramenta definitiva para todas as sua
 
 Cansado de procurar conversores online ou fazer cálculos complexos manualmente? O Conversor de Unidades foi projetado para simplificar sua vida, oferecendo uma interface limpa, intuitiva e resultados precisos para uma vasta gama de unidades de medida. Ideal para estudantes, profissionais e para o uso no dia a dia!
 
+![Logo do Conversor de Unidades](screenshots/logo_widescreen.png "Logo")
+
 ## Por que escolher o Conversor de Unidades?
 
 - **Ampla Cobertura de Unidades:** Converta facilmente entre dezenas de unidades nas categorias mais importantes. Nossa biblioteca inclui Medidas Fundamentais (Comprimento, Área, Volume, Massa, Densidade), Física e Engenharia (Velocidade, Aceleração, Força, Pressão, Energia, Potência, Torque, Temperatura), Eletricidade e Eletrônica (Tensão, Corrente, Resistência, Capacitância, Carga Elétrica), Computação (Dados) e Tempo/Relacionados (Tempo, Frequência, Ângulo).
@@ -13,6 +15,11 @@ Cansado de procurar conversores online ou fazer cálculos complexos manualmente?
     - **Resultados Claros:** Os resultados são formatados para fácil leitura, utilizando a vírgula decimal e apresentando números muito grandes ou pequenos em notação científica quando apropriado.
 - **Leve e Rápido:** Otimizado para performance, garantindo que suas conversões sejam instantâneas.
 - **Sempre à Mão:** Tenha um poderoso conversor de unidades no seu bolso, acessível a qualquer momento, mesmo offline (para as conversões que não dependem de dados externos).
+
+## Screenshots
+
+![Tela principal do Conversor de Unidades](screenshots/shot1.png "Tela Principal")
+![Tela de conversão do Conversor de Unidades](screenshots/shot2.png "Tela de Conversão")
 
 ## Categorias de Conversão Incluídas:
 
