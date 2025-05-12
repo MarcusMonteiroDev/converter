@@ -4,7 +4,7 @@ Bem-vindo ao Conversor de Unidades – a ferramenta definitiva para todas as sua
 
 Cansado de procurar conversores online ou fazer cálculos complexos manualmente? O Conversor de Unidades foi projetado para simplificar sua vida, oferecendo uma interface limpa, intuitiva e resultados precisos para uma vasta gama de unidades de medida. Ideal para estudantes, profissionais e para o uso no dia a dia!
 
-![Logo do Conversor de Unidades](screenshots/logo_widescreen.png "Logo")
+<img src="screenshots/logo_widescreen.png" alt="Logo do Conversor de Unidades" width="200">
 
 ## Por que escolher o Conversor de Unidades?
 
