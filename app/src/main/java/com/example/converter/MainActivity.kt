@@ -59,6 +59,7 @@ enum class Screen {
     Tensao,
     Densidade
 }
+// teste
 //--------------------------------------------------------------------------------------------------
 // Início do código principal:
 // Classe principal da activity
